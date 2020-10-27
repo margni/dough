@@ -1,0 +1,50 @@
+.host {
+  padding: 1rem;
+}
+
+.host header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.host h1 {
+  font-size: 1.75rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+.host h2 {
+  color: rgba(51, 51, 34, 0.5);
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+.host img {
+  width: 4rem;
+}
+
+@media only screen and (min-width: 512px) {
+  .host img {
+    width: 8rem;
+  }
+}
+
+.host footer {
+  color: rgba(51, 51, 34, 0.5);
+  font-size: 0.75rem;
+  padding: 1rem 0 0;
+  text-align: center;
+}
+
+.host footer a {
+  color: rgba(51, 51, 34, 0.5);
+  text-decoration: none;
+}
+
+.host footer a:hover,
+.host footer a:focus {
+  outline: none;
+  text-decoration: underline;
+}

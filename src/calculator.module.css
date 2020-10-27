@@ -1,0 +1,62 @@
+.host {
+  display: flex;
+  flex-direction: column;
+}
+
+.host fieldset {
+  border: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.host legend {
+  font-size: 1.4rem;
+  padding: 1rem 0 0;
+}
+
+.host label {
+  color: rgba(51, 51, 34, 0.5);
+  display: block;
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+  text-align: right;
+  transition: all 0.5s ease;
+}
+
+.host input {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px dashed rgba(51, 51, 34, 0);
+  color: #332;
+  display: block;
+  font-size: 1.25rem;
+  text-align: right;
+  transition: all 0.5s ease;
+  width: 8rem;
+}
+
+.host label:hover {
+  color: inherit;
+}
+
+.host label:hover input,
+.host input:focus {
+  border-color: rgba(51, 51, 34, 0.75);
+}
+
+.host input:focus {
+  background: #fff;
+  outline: none;
+}
+
+.host input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.host input:invalid {
+  color: red;
+  border-color: red;
+}

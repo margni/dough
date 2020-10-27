@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import { Calculator } from "./calculator";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import logo from "./logo.svg";
+import styles from "./app.module.css";
 
-export default App;
+export const App = () => (
+  <main className={styles.host}>
+    <header>
+      <h1>Dough</h1>
+      <h2>Sourdough Calculator</h2>
+      <img src={logo} alt=" " />
+    </header>
+    <Calculator />
+    <footer>
+      © <a href="http://margni.com">Margni Ltd.</a> 2020
+    </footer>
+  </main>
+);

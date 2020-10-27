@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# Dough
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Sourdough Calculator
+
+_© Margni Ltd. 2020_
 
 ## Available Scripts
 
