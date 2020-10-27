@@ -14,9 +14,9 @@ export const Calculator = () => {
       ballNumber: 2,
       water: 70,
       starterHydration: 100,
-      salt: 4,
+      salt: 2,
       starter: 33,
-      flourWeight: 263,
+      flourWeight: 265,
     },
     (state) => calcWeights(state)
   );
@@ -24,16 +24,7 @@ export const Calculator = () => {
   return (
     <div className={styles.host}>
       <fieldset>
-        <legend>Balls</legend>
-        <label>
-          Weight
-          <Number
-            min="1"
-            onDispatch={dispatch}
-            state={state}
-            property="ballWeight"
-          />
-        </label>
+        <legend>Doughballs</legend>
         <label>
           Count
           <Number
@@ -43,9 +34,19 @@ export const Calculator = () => {
             property="ballNumber"
           />
         </label>
+        <label>
+          Weight
+          <Number
+            min="1"
+            onDispatch={dispatch}
+            state={state}
+            property="ballWeight"
+          />
+        </label>
       </fieldset>
+
       <fieldset>
-        <legend>Recipe</legend>
+        <legend>Baker’s Percentages</legend>
         <label>
           Hydration
           <Number
@@ -87,7 +88,7 @@ export const Calculator = () => {
         </label>
       </fieldset>
       <fieldset>
-        <legend>Weights</legend>
+        <legend>Your Recipe</legend>
         <label>
           Flour
           <Number
