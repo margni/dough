@@ -45,7 +45,7 @@ export const Calculator = () => {
         </label>
       </fieldset>
       <fieldset>
-        <legend>Recipie</legend>
+        <legend>Recipe</legend>
         <label>
           Hydration
           <Number
