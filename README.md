@@ -1,5 +1,7 @@
 # Dough
 
+![Dough Logo](public/android-chrome-192x192.png)
+
 Sourdough Calculator
 
 _© Margni Ltd. 2020_
