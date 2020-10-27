@@ -5,14 +5,14 @@ import { Calculator } from "./calculator";
 test("Incrementing ball number changes flour weight.", () => {
   render(<Calculator />);
 
-  const ballNumberInput = screen.getByLabelText("Number");
-  const newBallNumber = +ballNumberInput.value + 1;
+  const ballCountInput = screen.getByLabelText("Count");
+  const newBallNumber = +ballCountInput.value + 1;
 
   const flourInput = screen.getByLabelText("Flour");
 
-  fireEvent.change(ballNumberInput, { target: { value: newBallNumber } });
+  fireEvent.change(ballCountInput, { target: { value: newBallNumber } });
 
   expect(flourInput.value).toEqual(
-    ((+flourInput.value / +ballNumberInput.value) * newBallNumber).toFixed(1)
+    ((+flourInput.value / +ballCountInput.value) * newBallNumber).toFixed(1)
   );
 });
