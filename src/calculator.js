@@ -30,8 +30,8 @@ export const Calculator = () => {
           <Number
             min="1"
             onDispatch={dispatch}
-            state={state}
             property="ballNumber"
+            state={state}
           />
         </label>
         <label>
@@ -39,12 +39,11 @@ export const Calculator = () => {
           <Number
             min="1"
             onDispatch={dispatch}
-            state={state}
             property="ballWeight"
+            state={state}
           />
         </label>
       </fieldset>
-
       <fieldset>
         <legend>Baker’s Percentages</legend>
         <label>
@@ -53,8 +52,8 @@ export const Calculator = () => {
             max="200"
             min="1"
             onDispatch={dispatch}
-            state={state}
             property="water"
+            state={state}
           />
         </label>
         <label>
@@ -62,9 +61,9 @@ export const Calculator = () => {
           <Number
             min=".2"
             onDispatch={dispatch}
+            property="salt"
             state={state}
             step="0.2"
-            property="salt"
           />
         </label>
         <label>
@@ -72,9 +71,9 @@ export const Calculator = () => {
           <Number
             min="1"
             onDispatch={dispatch}
+            property="starter"
             state={state}
             step="0.5"
-            property="starter"
           />
         </label>
         <label>
@@ -82,8 +81,8 @@ export const Calculator = () => {
           <Number
             min="1"
             onDispatch={dispatch}
-            state={state}
             property="starterHydration"
+            state={state}
           />
         </label>
       </fieldset>
@@ -94,8 +93,8 @@ export const Calculator = () => {
           <Number
             min="1"
             onDispatch={dispatch}
-            state={state}
             property="flourWeight"
+            state={state}
           />
         </label>
         <label>
@@ -103,8 +102,8 @@ export const Calculator = () => {
           <Number
             min="1"
             onDispatch={dispatch}
-            state={state}
             property="waterWeight"
+            state={state}
           />
         </label>
         <label>
@@ -112,8 +111,8 @@ export const Calculator = () => {
           <Number
             min="1"
             onDispatch={dispatch}
-            state={state}
             property="starterWeight"
+            state={state}
           />
         </label>
         <label>
@@ -121,8 +120,8 @@ export const Calculator = () => {
           <Number
             min=".1"
             onDispatch={dispatch}
-            state={state}
             property="saltWeight"
+            state={state}
           />
         </label>
       </fieldset>

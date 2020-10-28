@@ -7,7 +7,7 @@ export const App = () => (
   <main className={styles.host}>
     <header>
       <h1>Dough</h1>
-      <img src={logo} alt=" " />
+      <img src={logo} alt="" />
       <h2>Sourdough Calculator</h2>
     </header>
     <Calculator />
