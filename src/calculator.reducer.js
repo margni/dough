@@ -18,8 +18,8 @@ export const calcWeights = ({
 }) => {
   const saltWeight = percent(flourWeight, salt);
   const starterWeight = percent(flourWeight, starter);
-  const waterWeight =
-    percent(flourWeight, water) - starterWater(starterWeight, starterHydration);
+  const starterFlour = starterWeight - starterWater(starterWeight, starterHydration);
+  const waterWeight = percent(flourWeight + starterFlour, water) - starterWater(starterWeight, starterHydration);
 
   return {
     ballWeight: round(
