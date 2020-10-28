@@ -1,6 +1,8 @@
 # Dough
 
-![Dough Logo](public/android-chrome-192x192.png)
+[![Dough Logo](public/android-chrome-192x192.png)](https://dough.margni.com/)
+
+[dough.margni.com](https://dough.margni.com/)
 
 Sourdough Calculator
 
