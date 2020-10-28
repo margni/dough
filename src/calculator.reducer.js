@@ -3,7 +3,7 @@ const percent = (number, percent) => number * (percent * 0.01);
 const starterWater = (starterWeight, starterHydration) =>
   starterWeight * (starterHydration * 0.005);
 
-const rounding = 1;
+const rounding = 0;
 
 const round = (value, decimals) =>
   Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
@@ -34,7 +34,7 @@ export const calcWeights = ({
     flourWeight: round(flourWeight, rounding),
     waterWeight: round(waterWeight, rounding),
     starterWeight: round(starterWeight, rounding),
-    saltWeight: round(saltWeight, rounding),
+    saltWeight: round(saltWeight, rounding || 1),
   };
 };
 

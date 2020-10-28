@@ -13,6 +13,6 @@ test('Incrementing ball number changes flour weight.', () => {
   fireEvent.change(ballCountInput, { target: { value: newBallNumber } });
 
   expect(flourInput.value).toEqual(
-    ((+flourInput.value / +ballCountInput.value) * newBallNumber).toFixed(1)
+    ((+flourInput.value / +ballCountInput.value) * newBallNumber).toFixed(0)
   );
 });

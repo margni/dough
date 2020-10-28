@@ -16,7 +16,7 @@ export const Calculator = () => {
       starterHydration: 100,
       salt: 2,
       starter: 33,
-      flourWeight: 265,
+      flourWeight: 250,
     },
     (state) => calcWeights(state)
   );
@@ -54,6 +54,7 @@ export const Calculator = () => {
             onDispatch={dispatch}
             property="water"
             state={state}
+            step="0.5"
           />
         </label>
         <label>
@@ -83,6 +84,7 @@ export const Calculator = () => {
             onDispatch={dispatch}
             property="starterHydration"
             state={state}
+            step="0.5"
           />
         </label>
       </fieldset>
