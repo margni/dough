@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 
-import { Number } from './number';
+import { CalculatorFigure } from './calculator-figure';
 
 import { calcWeights, calculatorReducer } from './calculator.reducer';
 
@@ -9,7 +9,6 @@ import styles from './calculator.module.css';
 export const Calculator = () => {
   // TODO Ability to change rounding
   // TODO Ability to specify units
-  // TODO Show unit and % on inputs.
   const [state, dispatch] = useReducer(
     calculatorReducer,
     {
@@ -27,116 +26,96 @@ export const Calculator = () => {
     <div className={styles.host}>
       <fieldset>
         <legend>Doughballs</legend>
-        <label>
-          Count
-          <Number
-            min="1"
-            onDispatch={dispatch}
-            property="ballNumber"
-            state={state}
-          />
-        </label>
-        <label>
-          Weight
-          <Number
-            min="1"
-            onDispatch={dispatch}
-            property="ballWeight"
-            state={state}
-            unit="g"
-          />
-        </label>
+        <CalculatorFigure
+          label="Count"
+          min="1"
+          onDispatch={dispatch}
+          property="ballNumber"
+          state={state}
+          step="1"
+        />
+        <CalculatorFigure
+          label="Weight"
+          onDispatch={dispatch}
+          property="ballWeight"
+          state={state}
+          unit="g"
+        />
       </fieldset>
       <fieldset>
         <legend>Baker’s Percentages</legend>
-        <label>
-          Hydration
-          <Number
-            max="200"
-            min="1"
-            onDispatch={dispatch}
-            property="water"
-            state={state}
-            step="0.5"
-            unit="%"
-          />
-        </label>
-        <label>
-          Salt
-          <Number
-            min=".2"
-            onDispatch={dispatch}
-            property="salt"
-            state={state}
-            step="0.2"
-            unit="%"
-          />
-        </label>
-        <label>
-          Starter
-          <Number
-            min="1"
-            onDispatch={dispatch}
-            property="starter"
-            state={state}
-            step="0.5"
-            unit="%"
-          />
-        </label>
-        <label>
-          Starter Hydration
-          <Number
-            min="1"
-            onDispatch={dispatch}
-            property="starterHydration"
-            state={state}
-            step="0.5"
-            unit="%"
-          />
-        </label>
+        <CalculatorFigure
+          label="Hydration"
+          max="200"
+          min="1"
+          onDispatch={dispatch}
+          property="water"
+          state={state}
+          step="0.5"
+          unit="%"
+        />
+        <CalculatorFigure
+          label="Salt"
+          min=".2"
+          onDispatch={dispatch}
+          property="salt"
+          state={state}
+          step="0.2"
+          unit="%"
+        />
+        <CalculatorFigure
+          label="Starter"
+          min="1"
+          onDispatch={dispatch}
+          property="starter"
+          state={state}
+          step="0.5"
+          unit="%"
+        />
+        <CalculatorFigure
+          label="Starter Hydration"
+          min="1"
+          onDispatch={dispatch}
+          property="starterHydration"
+          state={state}
+          step="0.5"
+          unit="%"
+        />
       </fieldset>
       <fieldset>
         <legend>Your Recipe</legend>
-        <label>
-          Flour
-          <Number
-            min="1"
-            onDispatch={dispatch}
-            property="flourWeight"
-            state={state}
-            unit="g"
-          />
-        </label>
-        <label>
-          Water
-          <Number
-            min="1"
-            onDispatch={dispatch}
-            property="waterWeight"
-            state={state}
-            unit="g"
-          />
-        </label>
-        <label>
-          Starter
-          <Number
-            min="1"
-            onDispatch={dispatch}
-            property="starterWeight"
-            state={state}
-            unit="g"
-          />
-        </label>
-        <label>
-          Salt
-          <Number
-            min=".1"
-            onDispatch={dispatch}
-            property="saltWeight"
-            state={state}
-            unit="g"
-          />
-        </label>
+        <CalculatorFigure
+          label="Flour"
+          min="1"
+          onDispatch={dispatch}
+          property="flourWeight"
+          state={state}
+          unit="g"
+        />
+        <CalculatorFigure
+          label="Water"
+          min="1"
+          onDispatch={dispatch}
+          property="waterWeight"
+          state={state}
+          unit="g"
+        />
+        <CalculatorFigure
+          label="Starter"
+          min="1"
+          onDispatch={dispatch}
+          property="starterWeight"
+          state={state}
+          unit="g"
+        />
+        <CalculatorFigure
+          label="Salt"
+          min=".1"
+          onDispatch={dispatch}
+          property="saltWeight"
+          state={state}
+          unit="g"
+        />
       </fieldset>
     </div>
   );

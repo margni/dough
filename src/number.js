@@ -1,49 +1,32 @@
 import { useEffect, useState } from 'react';
 
-export const Number = ({
-  max,
-  min = '0',
-  onDispatch,
-  property,
-  state,
-  step = 'any',
-  unit,
-}) => {
-  const [value, setValue] = useState(state[property]);
+export const Number = ({ max, min = '0', onChange, step = 'any', value }) => {
+  const [localValue, setLocalValue] = useState(value);
 
   useEffect(() => {
-    // Always allow state updtes to override any local values
-    if (state[property].toString() !== value) {
-      setValue(state[property].toString());
-    }
-    // eslint-disable-next-line
-  }, [state, property]);
-
-  const handleChange = (event) => {
-    setValue(event.currentTarget.value);
-
-    // Only dispatch the value if its a valid number
-    if (
-      event.currentTarget.validity.valid &&
-      event.currentTarget.value !== '' &&
-      !isNaN(+event.currentTarget.value)
-    ) {
-      onDispatch({ type: property, value: +event.currentTarget.value });
-    }
-  };
+    setLocalValue(value.toString());
+  }, [value]);
 
   return (
-    <div>
-      <input
-        max={max}
-        min={min}
-        onChange={handleChange}
-        required
-        step={step}
-        type="number"
-        value={value}
-      />
-      {unit}
-    </div>
+    <input
+      max={max}
+      min={min}
+      onChange={(event) => {
+        setLocalValue(event.currentTarget.value);
+
+        // Only dispatch the value if its a valid number
+        if (
+          event.currentTarget.validity.valid &&
+          event.currentTarget.value !== '' &&
+          !isNaN(+event.currentTarget.value)
+        ) {
+          onChange(+event.currentTarget.value);
+        }
+      }}
+      required
+      step={step}
+      type="number"
+      value={localValue}
+    />
   );
 };

@@ -3,18 +3,29 @@ import userEvent from '@testing-library/user-event';
 
 import { Number } from './number';
 
-test('Has value from state object.', () => {
-  render(<Number onDispatch={() => {}} state={{ test: 2 }} property="test" />);
+test('Has value.', () => {
+  render(<Number onChange={() => {}} value="2" />);
 
   expect(screen.getByRole('spinbutton').value).toEqual('2');
 });
 
-test('Calls dispatcher on change.', () => {
+test("Doesn't call onChange on invalid change.", () => {
   const fn = jest.fn();
 
-  render(<Number onDispatch={fn} state={{ test: 0 }} property="test" />);
+  render(<Number onChange={fn} value="0" step=".2" />);
+
+  userEvent.type(screen.getByRole('spinbutton'), '.1');
+
+  expect(screen.getByRole('spinbutton').value).toEqual('0.1');
+  expect(fn).not.toHaveBeenCalled();
+});
+
+test('Calls onChange on valid change.', () => {
+  const fn = jest.fn();
+
+  render(<Number onChange={fn} value="0" />);
 
   userEvent.type(screen.getByRole('spinbutton'), '1');
 
-  expect(fn).toHaveBeenCalledWith({ type: 'test', value: 1 });
+  expect(fn).toHaveBeenCalledWith(1);
 });
