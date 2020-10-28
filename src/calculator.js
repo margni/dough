@@ -8,6 +8,8 @@ import styles from './calculator.module.css';
 
 export const Calculator = () => {
   // TODO Ability to change rounding
+  // TODO Ability to specify units
+  // TODO Show unit and % on inputs.
   const [state, dispatch] = useReducer(
     calculatorReducer,
     {
@@ -41,6 +43,7 @@ export const Calculator = () => {
             onDispatch={dispatch}
             property="ballWeight"
             state={state}
+            unit="g"
           />
         </label>
       </fieldset>
@@ -55,6 +58,7 @@ export const Calculator = () => {
             property="water"
             state={state}
             step="0.5"
+            unit="%"
           />
         </label>
         <label>
@@ -65,6 +69,7 @@ export const Calculator = () => {
             property="salt"
             state={state}
             step="0.2"
+            unit="%"
           />
         </label>
         <label>
@@ -75,6 +80,7 @@ export const Calculator = () => {
             property="starter"
             state={state}
             step="0.5"
+            unit="%"
           />
         </label>
         <label>
@@ -85,6 +91,7 @@ export const Calculator = () => {
             property="starterHydration"
             state={state}
             step="0.5"
+            unit="%"
           />
         </label>
       </fieldset>
@@ -97,6 +104,7 @@ export const Calculator = () => {
             onDispatch={dispatch}
             property="flourWeight"
             state={state}
+            unit="g"
           />
         </label>
         <label>
@@ -106,6 +114,7 @@ export const Calculator = () => {
             onDispatch={dispatch}
             property="waterWeight"
             state={state}
+            unit="g"
           />
         </label>
         <label>
@@ -115,6 +124,7 @@ export const Calculator = () => {
             onDispatch={dispatch}
             property="starterWeight"
             state={state}
+            unit="g"
           />
         </label>
         <label>
@@ -124,6 +134,7 @@ export const Calculator = () => {
             onDispatch={dispatch}
             property="saltWeight"
             state={state}
+            unit="g"
           />
         </label>
       </fieldset>

@@ -4,9 +4,10 @@ export const Number = ({
   max,
   min = '0',
   onDispatch,
+  property,
   state,
   step = 'any',
-  property,
+  unit,
 }) => {
   const [value, setValue] = useState(state[property]);
 
@@ -32,14 +33,17 @@ export const Number = ({
   };
 
   return (
-    <input
-      max={max}
-      min={min}
-      onChange={handleChange}
-      required
-      step={step}
-      type="number"
-      value={value}
-    />
+    <div>
+      <input
+        max={max}
+        min={min}
+        onChange={handleChange}
+        required
+        step={step}
+        type="number"
+        value={value}
+      />
+      {unit}
+    </div>
   );
 };
