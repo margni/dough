@@ -23,7 +23,7 @@ export const Calculator = () => {
   );
 
   return (
-    <div className={styles.host}>
+    <form className={styles.host}>
       <fieldset>
         <legend>Doughballs</legend>
         <CalculatorFigure
@@ -117,6 +117,6 @@ export const Calculator = () => {
           unit="g"
         />
       </fieldset>
-    </div>
+    </form>
   );
 };
