@@ -1,7 +1,7 @@
-import { Calculator } from "./calculator";
+import { Calculator } from './calculator';
 
-import logo from "./logo.svg";
-import styles from "./app.module.css";
+import logo from './logo.svg';
+import styles from './app.module.css';
 
 export const App = () => (
   <main className={styles.host}>
@@ -12,7 +12,8 @@ export const App = () => (
     </header>
     <Calculator />
     <footer>
-      © <a href="http://margni.com">Margni Ltd.</a> 2020
+      © <a href="http://margni.com">Margni Ltd.</a> 2020 –{' '}
+      <a href="https://github.com/margni/dough">Source</a>
     </footer>
   </main>
 );

@@ -52,7 +52,11 @@
   outline: none;
 }
 
-.host input[type="number"]::-webkit-inner-spin-button {
+.host input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.host input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 

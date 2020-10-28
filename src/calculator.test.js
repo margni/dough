@@ -1,14 +1,14 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from '@testing-library/react';
 
-import { Calculator } from "./calculator";
+import { Calculator } from './calculator';
 
-test("Incrementing ball number changes flour weight.", () => {
+test('Incrementing ball number changes flour weight.', () => {
   render(<Calculator />);
 
-  const ballCountInput = screen.getByLabelText("Count");
+  const ballCountInput = screen.getByLabelText('Count');
   const newBallNumber = +ballCountInput.value + 1;
 
-  const flourInput = screen.getByLabelText("Flour");
+  const flourInput = screen.getByLabelText('Flour');
 
   fireEvent.change(ballCountInput, { target: { value: newBallNumber } });
 

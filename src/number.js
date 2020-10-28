@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const Number = ({
   max,
-  min = "0",
+  min = '0',
   onDispatch,
   state,
-  step = "any",
+  step = 'any',
   property,
 }) => {
   const [value, setValue] = useState(state[property]);
@@ -24,7 +24,7 @@ export const Number = ({
     // Only dispatch the value if its a valid number
     if (
       event.currentTarget.validity.valid &&
-      event.currentTarget.value !== "" &&
+      event.currentTarget.value !== '' &&
       !isNaN(+event.currentTarget.value)
     ) {
       onDispatch({ type: property, value: +event.currentTarget.value });

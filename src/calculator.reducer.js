@@ -6,7 +6,7 @@ const starterWater = (starterWeight, starterHydration) =>
 const rounding = 1;
 
 const round = (value, decimals) =>
-  Number(Math.round(value + "e" + decimals) + "e-" + decimals);
+  Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 
 export const calcWeights = ({
   ballNumber,
@@ -40,7 +40,7 @@ export const calcWeights = ({
 
 export const calculatorReducer = (state, action) => {
   switch (action.type) {
-    case "ballWeight":
+    case 'ballWeight':
       return {
         ...calcWeights({
           ...state,
@@ -49,32 +49,32 @@ export const calculatorReducer = (state, action) => {
         ballWeight: action.value,
       };
 
-    case "ballNumber":
+    case 'ballNumber':
       return calcWeights({
         ...state,
         ballNumber: action.value,
         flourWeight: (state.flourWeight / state.ballNumber) * action.value,
       });
 
-    case "water":
+    case 'water':
       return calcWeights({ ...state, water: action.value });
 
-    case "starterHydration":
+    case 'starterHydration':
       return calcWeights({ ...state, starterHydration: action.value });
 
-    case "salt":
+    case 'salt':
       return calcWeights({ ...state, salt: action.value });
 
-    case "starter":
+    case 'starter':
       return calcWeights({ ...state, starter: action.value });
 
-    case "flourWeight":
+    case 'flourWeight':
       return {
         ...calcWeights({ ...state, flourWeight: action.value }),
         flourWeight: action.value,
       };
 
-    case "waterWeight":
+    case 'waterWeight':
       return {
         ...calcWeights({
           ...state,
@@ -87,7 +87,7 @@ export const calculatorReducer = (state, action) => {
         waterWeight: action.value,
       };
 
-    case "saltWeight":
+    case 'saltWeight':
       return {
         ...calcWeights({
           ...state,
@@ -96,7 +96,7 @@ export const calculatorReducer = (state, action) => {
         saltWeight: action.value,
       };
 
-    case "starterWeight":
+    case 'starterWeight':
       return {
         ...calcWeights({
           ...state,

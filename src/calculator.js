@@ -1,10 +1,10 @@
-import { useReducer } from "react";
+import { useReducer } from 'react';
 
-import { Number } from "./number";
+import { Number } from './number';
 
-import { calcWeights, calculatorReducer } from "./calculator.reducer";
+import { calcWeights, calculatorReducer } from './calculator.reducer';
 
-import styles from "./calculator.module.css";
+import styles from './calculator.module.css';
 
 export const Calculator = () => {
   // TODO Ability to change rounding
