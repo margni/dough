@@ -16,10 +16,13 @@ export const calcWeights = ({
   salt,
   starter,
 }) => {
-  const saltWeight = percent(flourWeight, salt);
   const starterWeight = percent(flourWeight, starter);
-  const starterFlour = starterWeight - starterWater(starterWeight, starterHydration);
-  const waterWeight = percent(flourWeight + starterFlour, water) - starterWater(starterWeight, starterHydration);
+  const starterFlour =
+    starterWeight - starterWater(starterWeight, starterHydration);
+  const saltWeight = percent(flourWeight + starterFlour, salt);
+  const waterWeight =
+    percent(flourWeight + starterFlour, water) -
+    starterWater(starterWeight, starterHydration);
 
   return {
     ballWeight: round(
@@ -57,16 +60,10 @@ export const calculatorReducer = (state, action) => {
       });
 
     case 'water':
-      return calcWeights({ ...state, water: action.value });
-
     case 'starterHydration':
-      return calcWeights({ ...state, starterHydration: action.value });
-
     case 'salt':
-      return calcWeights({ ...state, salt: action.value });
-
     case 'starter':
-      return calcWeights({ ...state, starter: action.value });
+      return calcWeights({ ...state, [action.type]: action.value });
 
     case 'flourWeight':
       return {

@@ -6,9 +6,16 @@ import { calcWeights, calculatorReducer } from './calculator.reducer';
 
 import styles from './calculator.module.css';
 
+// TODO BUG Water weight and salt weight calculations may be off.
+// TODO FEATURE Ability to change rounding.
+// TODO FEATURE Ability to specify units.
+// TODO FEATURE Ability to addextra ingredients.
+// TODO FEATURE Ability to specify multiple flour types.
+// TODO FEATURE Ability to save your recipe.
+// TODO FEATURE Add presets.
+// TODO FEATURE Ability to use yeast instead of starter, this would work just like an extra ingredient.
+// TODO FEATURE Ability to expand and collapse sections, or perhaps step through wizard style and be presended with weights at the end.
 export const Calculator = () => {
-  // TODO Ability to change rounding
-  // TODO Ability to specify units
   const [state, dispatch] = useReducer(
     calculatorReducer,
     {
