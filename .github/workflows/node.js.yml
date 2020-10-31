@@ -28,3 +28,18 @@ jobs:
       - run: npm run build
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci && npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MARGNI_DOUGH }}'
+          channelId: live
+          projectId: margni-dough
+        env:
+          FIREBASE_CLI_PREVIEWS: hostingchannels
