@@ -104,6 +104,7 @@ export const Calculator = () => {
           min="1"
           onDispatch={dispatch}
           property="waterWeight"
+          readOnly
           state={state}
           unit="g"
         />
@@ -120,6 +121,7 @@ export const Calculator = () => {
           min=".1"
           onDispatch={dispatch}
           property="saltWeight"
+          readOnly
           state={state}
           unit="g"
         />

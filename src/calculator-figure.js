@@ -8,6 +8,7 @@ export const CalculatorFigure = ({
   min,
   onDispatch,
   property,
+  readOnly,
   state,
   step,
   unit,
@@ -19,6 +20,7 @@ export const CalculatorFigure = ({
         max={max}
         min={min}
         onChange={(value) => onDispatch({ type: property, value })}
+        readOnly={readOnly}
         step={step}
         value={state[property]}
       />

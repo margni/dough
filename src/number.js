@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const Number = ({ max, min = '0', onChange, step = 'any', value }) => {
+export const Number = ({
+  max,
+  min = '0',
+  onChange,
+  readOnly,
+  step = 'any',
+  value,
+}) => {
   const [localValue, setLocalValue] = useState(value);
   const input = useRef();
 
@@ -27,6 +34,7 @@ export const Number = ({ max, min = '0', onChange, step = 'any', value }) => {
       onKeyDown={(event) =>
         event.nativeEvent.key === 'Enter' && input.current.blur()
       }
+      readOnly={readOnly}
       ref={input}
       required
       step={step}
