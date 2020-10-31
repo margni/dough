@@ -44,7 +44,7 @@ test('Incrementing ball number changes relative weights.', () => {
   );
 });
 
-test('Incrementing ball weight changes relative weights.', () => {
+test('Increasing ball weight changes relative weights.', () => {
   render(<Calculator />);
 
   const increase = 1.5;
@@ -69,4 +69,24 @@ test('Incrementing ball weight changes relative weights.', () => {
     Math.floor(newStarterWeight).toString()
   );
   expect(saltWeightInput.value).toEqual(newSaltWeight.toString());
+});
+
+test('Increasing salt % increases salt weight.', () => {
+  render(<Calculator />);
+
+  const saltPercentInput = screen.getByLabelText('Salt%');
+  const starterPercentInput = screen.getByLabelText('Starter%');
+  const starterHydrationPercentInput = screen.getByLabelText(
+    'Starter Hydration%'
+  );
+
+  const flourWeightInput = screen.getByLabelText('Flourg');
+  const saltWeightInput = screen.getByLabelText('Saltg');
+
+  fireEvent.change(flourWeightInput, { target: { value: 500 } });
+  fireEvent.change(starterHydrationPercentInput, { target: { value: 100 } });
+  fireEvent.change(starterPercentInput, { target: { value: 20 } });
+  fireEvent.change(saltPercentInput, { target: { value: 10 } });
+
+  expect(saltWeightInput.value).toEqual('55');
 });

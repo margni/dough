@@ -72,7 +72,7 @@ export const Calculator = () => {
         />
         <CalculatorFigure
           label="Starter"
-          min="1"
+          min="0"
           onDispatch={dispatch}
           property="starter"
           state={state}
@@ -110,7 +110,7 @@ export const Calculator = () => {
         />
         <CalculatorFigure
           label="Starter"
-          min="1"
+          min="0"
           onDispatch={dispatch}
           property="starterWeight"
           state={state}
