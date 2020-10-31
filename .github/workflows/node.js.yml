@@ -41,6 +41,7 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: build
+          path: build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
