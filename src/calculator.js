@@ -113,6 +113,7 @@ export const Calculator = () => {
           min="0"
           onDispatch={dispatch}
           property="starterWeight"
+          readOnly={state.starter === 0}
           state={state}
           unit="g"
         />
