@@ -11,7 +11,7 @@ test('Initial weights are correct.', () => {
   expect(screen.getByLabelText('Saltg').value).toEqual('5.8');
 });
 
-test('Incrementing ball number changes relative weights.', async () => {
+test('Incrementing ball number changes relative weights.', () => {
   render(<Calculator />);
 
   const ballCountInput = screen.getByLabelText('Count');
@@ -42,4 +42,31 @@ test('Incrementing ball number changes relative weights.', async () => {
   expect(saltWeightInput.value).toEqual(
     (saltBallWeight * newBallNumber).toFixed(1)
   );
+});
+
+test('Incrementing ball weight changes relative weights.', () => {
+  render(<Calculator />);
+
+  const increase = 1.5;
+  const ballWeightInput = screen.getByLabelText('Weightg');
+  const flourWeightInput = screen.getByLabelText('Flourg');
+  const waterWeightInput = screen.getByLabelText('Waterg');
+  const starterWeightInput = screen.getByLabelText('Starterg');
+  const saltWeightInput = screen.getByLabelText('Saltg');
+
+  const newBallWeight = +ballWeightInput.value * increase;
+  const newFlourWeight = +flourWeightInput.value * increase;
+  const newWaterWeight = +waterWeightInput.value * increase;
+  const newStarterWeight = +starterWeightInput.value * increase;
+  const newSaltWeight = +saltWeightInput.value * increase;
+
+  fireEvent.change(ballWeightInput, { target: { value: newBallWeight } });
+
+  expect(ballWeightInput.value).toEqual(newBallWeight.toString());
+  expect(flourWeightInput.value).toEqual(newFlourWeight.toString());
+  expect(waterWeightInput.value).toEqual(Math.floor(newWaterWeight).toString());
+  expect(starterWeightInput.value).toEqual(
+    Math.floor(newStarterWeight).toString()
+  );
+  expect(saltWeightInput.value).toEqual(newSaltWeight.toString());
 });

@@ -1,5 +1,7 @@
 # Dough
 
+[![codecov](https://codecov.io/gh/margni/dough/branch/master/graph/badge.svg?token=CTAIR2CCR9)](https://codecov.io/gh/margni/dough/)
+
 [![Dough Logo](public/android-chrome-192x192.png)](https://dough.margni.com/)
 
 [dough.margni.com](https://dough.margni.com/)
