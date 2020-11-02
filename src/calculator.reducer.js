@@ -14,8 +14,7 @@ export const calculate = ({
   const water = hydration - (starter - starter / (1 + starterHydration));
   const total = 1 + water + salt + starter;
 
-  const totalWeight = ballWeight * ballNumber;
-  const flourWeight = totalWeight / total;
+  const flourWeight = (ballWeight * ballNumber) / total;
 
   return {
     ballWeight,
@@ -32,6 +31,9 @@ export const calculate = ({
     waterWeight: round(flourWeight * water),
   };
 };
+
+const calculateWeight = (flourWeight, state) =>
+  round((flourWeight * state.total) / state.ballNumber);
 
 export const calculatorReducer = (state, action) => {
   switch (action.type) {
@@ -51,7 +53,7 @@ export const calculatorReducer = (state, action) => {
       return {
         ...calculate({
           ...state,
-          ballWeight: round((action.value * state.total) / state.ballNumber),
+          ballWeight: calculateWeight(action.value, state),
         }),
         flourWeight: action.value,
       };
@@ -60,9 +62,7 @@ export const calculatorReducer = (state, action) => {
       return {
         ...calculate({
           ...state,
-          ballWeight: round(
-            ((action.value / state.water) * state.total) / state.ballNumber
-          ),
+          ballWeight: calculateWeight(action.value / state.water, state),
         }),
         waterWeight: action.value,
       };
@@ -71,9 +71,7 @@ export const calculatorReducer = (state, action) => {
       return {
         ...calculate({
           ...state,
-          ballWeight: round(
-            ((action.value / state.salt) * state.total) / state.ballNumber
-          ),
+          ballWeight: calculateWeight(action.value / state.salt, state),
         }),
         saltWeight: action.value,
       };
@@ -82,9 +80,7 @@ export const calculatorReducer = (state, action) => {
       return {
         ...calculate({
           ...state,
-          ballWeight: round(
-            ((action.value / state.starter) * state.total) / state.ballNumber
-          ),
+          ballWeight: calculateWeight(action.value / state.starter, state),
         }),
         starterWeight: action.value,
       };
