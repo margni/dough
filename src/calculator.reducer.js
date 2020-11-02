@@ -72,8 +72,7 @@ export const calculatorReducer = (state, action) => {
         ...calculate({
           ...state,
           ballWeight: round(
-            ((action.value / (state.salt * 0.01)) * state.total) /
-              state.ballNumber
+            ((action.value / state.salt) * state.total) / state.ballNumber
           ),
         }),
         saltWeight: action.value,
@@ -84,8 +83,7 @@ export const calculatorReducer = (state, action) => {
         ...calculate({
           ...state,
           ballWeight: round(
-            ((action.value / (state.starter * 0.01)) * state.total) /
-              state.ballNumber
+            ((action.value / state.starter) * state.total) / state.ballNumber
           ),
         }),
         starterWeight: action.value,

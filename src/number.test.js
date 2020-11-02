@@ -6,7 +6,7 @@ import { Number } from './number';
 test('Has value.', () => {
   render(<Number onChange={() => {}} value="2" />);
 
-  expect(screen.getByRole('spinbutton').value).toEqual('2');
+  expect(screen.getByRole('spinbutton')).toHaveDisplayValue('2');
 });
 
 test("Doesn't call onChange on invalid change.", () => {
@@ -16,7 +16,7 @@ test("Doesn't call onChange on invalid change.", () => {
 
   userEvent.type(screen.getByRole('spinbutton'), '.1');
 
-  expect(screen.getByRole('spinbutton').value).toEqual('0.1');
+  expect(screen.getByRole('spinbutton')).toHaveDisplayValue('0.1');
   expect(fn).not.toHaveBeenCalled();
 });
 
@@ -35,7 +35,7 @@ test('Modifier works', () => {
 
   render(<Number modifier={100} onChange={fn} value={0.1} />);
 
-  expect(screen.getByRole('spinbutton').value).toBe('10');
+  expect(screen.getByRole('spinbutton')).toHaveDisplayValue('10');
 
   userEvent.type(screen.getByRole('spinbutton'), '{backspace}{backspace}20');
 
