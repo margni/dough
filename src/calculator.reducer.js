@@ -11,17 +11,11 @@ export const calculate = ({
   starter,
   starterHydration,
 }) => {
-  const starterFlour = starter / (1 + starterHydration);
-  const starterWater = starter - starterFlour;
-  const totalWeight = ballWeight * ballNumber;
-
-  const water = hydration - starterWater;
+  const water = hydration - (starter - starter / (1 + starterHydration));
   const total = 1 + water + salt + starter;
 
+  const totalWeight = ballWeight * ballNumber;
   const flourWeight = totalWeight / total;
-  const saltWeight = flourWeight * salt;
-  const starterWeight = flourWeight * starter;
-  const waterWeight = flourWeight * water;
 
   return {
     ballWeight,
@@ -33,9 +27,9 @@ export const calculate = ({
     total,
     water,
     flourWeight: round(flourWeight),
-    saltWeight: round(saltWeight, rounding || 1),
-    starterWeight: round(starterWeight),
-    waterWeight: round(waterWeight),
+    saltWeight: round(flourWeight * salt, rounding || 1),
+    starterWeight: round(flourWeight * starter),
+    waterWeight: round(flourWeight * water),
   };
 };
 
