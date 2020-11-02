@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 
 import { CalculatorFigure } from './calculator-figure';
 
-import { calcWeights, calculatorReducer } from './calculator.reducer';
+import { calcFromBallWeight, calculatorReducer } from './calculator.reducer';
 
 import styles from './calculator.module.css';
 
@@ -20,13 +20,13 @@ export const Calculator = () => {
     calculatorReducer,
     {
       ballNumber: 2,
-      water: 70,
+      ballWeight: 250,
+      hydration: 70,
       starterHydration: 100,
       salt: 2,
       starter: 33,
-      flourWeight: 250,
     },
-    (state) => calcWeights(state)
+    (state) => calcFromBallWeight(state)
   );
 
   return (
@@ -56,7 +56,7 @@ export const Calculator = () => {
           max="200"
           min="1"
           onDispatch={dispatch}
-          property="water"
+          property="hydration"
           state={state}
           step="0.5"
           unit="%"
@@ -104,7 +104,6 @@ export const Calculator = () => {
           min="1"
           onDispatch={dispatch}
           property="waterWeight"
-          readOnly
           state={state}
           unit="g"
         />
@@ -122,7 +121,6 @@ export const Calculator = () => {
           min=".1"
           onDispatch={dispatch}
           property="saltWeight"
-          readOnly
           state={state}
           unit="g"
         />

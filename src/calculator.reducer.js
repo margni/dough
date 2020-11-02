@@ -1,102 +1,99 @@
-const percent = (number, percent) => number * (percent * 0.01);
-
 const rounding = 0;
 
-const round = (value, decimals = rounding) =>
+export const round = (value, decimals = rounding) =>
   Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 
-const calcStarter = ({ flourWeight, starter, starterHydration }) => {
-  const starterWeight = percent(flourWeight, starter);
-  const starterFlour = starterWeight / (1 + starterHydration / 100);
-
-  return {
-    starterWeight,
-    starterFlour,
-    starterWater: starterWeight - starterFlour,
-    totalFlourWeight: flourWeight + starterFlour,
-  };
-};
-
-export const calcWeights = ({
+export const calcFromBallWeight = ({
+  ballWeight,
   ballNumber,
-  flourWeight,
-  water,
-  starterHydration,
+  hydration,
   salt,
   starter,
+  starterHydration,
 }) => {
-  const starterCalculations = calcStarter({
-    flourWeight,
-    starter,
-    starterHydration,
-  });
-  const saltWeight = percent(starterCalculations.totalFlourWeight, salt);
-  const waterWeight =
-    percent(starterCalculations.totalFlourWeight, water) -
-    starterCalculations.starterWater;
+  const starterPercent = starter * 0.01;
+  const starterFlour = starterPercent / (1 + starterHydration * 0.01);
+  const starterWater = starterPercent - starterFlour;
+  const totalWeight = ballWeight * ballNumber;
+
+  const water = hydration * 0.01 - starterWater;
+  const total = 1 + water + salt * 0.01 + starter * 0.01;
+
+  const flourWeight = totalWeight / total;
+  const saltWeight = flourWeight * (salt * 0.01);
+  const starterWeight = flourWeight * (starter * 0.01);
+  const waterWeight = flourWeight * water;
 
   return {
-    ballWeight: round(
-      (flourWeight +
-        starterCalculations.starterWeight +
-        waterWeight +
-        saltWeight) /
-        ballNumber,
-      rounding
-    ),
+    ballWeight,
     ballNumber,
-    water,
-    starterHydration,
+    hydration,
     salt,
     starter,
+    starterHydration,
+    total,
+    water,
     flourWeight: round(flourWeight),
-    waterWeight: round(waterWeight),
-    starterWeight: round(starterCalculations.starterWeight),
     saltWeight: round(saltWeight, rounding || 1),
+    starterWeight: round(starterWeight),
+    waterWeight: round(waterWeight),
   };
 };
 
 export const calculatorReducer = (state, action) => {
   switch (action.type) {
     case 'ballWeight':
-      return {
-        ...calcWeights({
-          ...state,
-          flourWeight: action.value * (state.flourWeight / state.ballWeight),
-        }),
-        ballWeight: action.value,
-      };
+      return calcFromBallWeight({ ...state, ballWeight: action.value });
 
     case 'ballNumber':
-      return calcWeights({
-        ...state,
-        ballNumber: action.value,
-        flourWeight: (state.flourWeight / state.ballNumber) * action.value,
-      });
+      return calcFromBallWeight({ ...state, ballNumber: action.value });
 
-    case 'water':
+    case 'hydration':
     case 'starterHydration':
     case 'salt':
     case 'starter':
-      return calcWeights({ ...state, [action.type]: action.value });
+      return calcFromBallWeight({ ...state, [action.type]: action.value });
 
     case 'flourWeight':
       return {
-        ...calcWeights({ ...state, flourWeight: action.value }),
+        ...calcFromBallWeight({
+          ...state,
+          ballWeight: (action.value * state.total) / state.ballNumber,
+        }),
         flourWeight: action.value,
       };
 
-    // TODO Enable editing of water weight.
-    // TODO Enable editing of salt weight.
     case 'waterWeight':
+      return {
+        ...calcFromBallWeight({
+          ...state,
+          ballWeight: round(
+            ((action.value / state.water) * state.total) / state.ballNumber
+          ),
+        }),
+        waterWeight: action.value,
+      };
+
     case 'saltWeight':
-      throw new Error(`${action.type} is not editable.`);
+      return {
+        ...calcFromBallWeight({
+          ...state,
+          ballWeight: round(
+            ((action.value / (state.salt * 0.01)) * state.total) /
+              state.ballNumber
+          ),
+        }),
+        saltWeight: action.value,
+      };
 
     case 'starterWeight':
       return {
-        ...calcWeights({
+        ...calcFromBallWeight({
           ...state,
-          flourWeight: (action.value / state.starter) * 100,
+          ballWeight: round(
+            ((action.value / (state.starter * 0.01)) * state.total) /
+              state.ballNumber
+          ),
         }),
         starterWeight: action.value,
       };
