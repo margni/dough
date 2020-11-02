@@ -9,7 +9,7 @@ export const Number = ({
   step = 'any',
   value,
 }) => {
-  const [localValue, setLocalValue] = useState(value);
+  const [localValue, setLocalValue] = useState(value * modifier);
   const input = useRef();
 
   useEffect(() => {

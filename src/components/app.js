@@ -1,6 +1,6 @@
 import { Calculator } from './calculator';
 
-import logo from './logo.svg';
+import logo from '../logo.svg';
 import styles from './app.module.css';
 
 export const App = () => (

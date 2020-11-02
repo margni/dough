@@ -8,7 +8,7 @@ import styles from './calculator.module.css';
 
 // TODO FEATURE Ability to change rounding.
 // TODO FEATURE Ability to specify units.
-// TODO FEATURE Ability to addextra ingredients.
+// TODO FEATURE Ability to add extra ingredients.
 // TODO FEATURE Ability to specify multiple flour types.
 // TODO FEATURE Ability to save your recipe.
 // TODO FEATURE Add presets.
@@ -41,6 +41,7 @@ export const Calculator = () => {
           step="1"
         />
         <CalculatorFigure
+          min="10"
           label="Weight"
           onDispatch={dispatch}
           property="ballWeight"
@@ -83,6 +84,7 @@ export const Calculator = () => {
         />
         <CalculatorFigure
           label="Starter Hydration"
+          max="200"
           min="1"
           onDispatch={dispatch}
           percentage
