@@ -2,11 +2,10 @@ import { useReducer } from 'react';
 
 import { CalculatorFigure } from './calculator-figure';
 
-import { calcFromBallWeight, calculatorReducer } from './calculator.reducer';
+import { calculate, calculatorReducer } from './calculator.reducer';
 
 import styles from './calculator.module.css';
 
-// TODO BUG Water weight and salt weight calculations may be off.
 // TODO FEATURE Ability to change rounding.
 // TODO FEATURE Ability to specify units.
 // TODO FEATURE Ability to addextra ingredients.
@@ -26,7 +25,7 @@ export const Calculator = () => {
       salt: 2,
       starter: 33,
     },
-    (state) => calcFromBallWeight(state)
+    (state) => calculate(state)
   );
 
   return (

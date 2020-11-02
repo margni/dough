@@ -1,9 +1,9 @@
 const rounding = 0;
 
-export const round = (value, decimals = rounding) =>
+const round = (value, decimals = rounding) =>
   Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 
-export const calcFromBallWeight = ({
+export const calculate = ({
   ballWeight,
   ballNumber,
   hydration,
@@ -43,29 +43,29 @@ export const calcFromBallWeight = ({
 export const calculatorReducer = (state, action) => {
   switch (action.type) {
     case 'ballWeight':
-      return calcFromBallWeight({ ...state, ballWeight: action.value });
+      return calculate({ ...state, ballWeight: action.value });
 
     case 'ballNumber':
-      return calcFromBallWeight({ ...state, ballNumber: action.value });
+      return calculate({ ...state, ballNumber: action.value });
 
     case 'hydration':
     case 'starterHydration':
     case 'salt':
     case 'starter':
-      return calcFromBallWeight({ ...state, [action.type]: action.value });
+      return calculate({ ...state, [action.type]: action.value });
 
     case 'flourWeight':
       return {
-        ...calcFromBallWeight({
+        ...calculate({
           ...state,
-          ballWeight: (action.value * state.total) / state.ballNumber,
+          ballWeight: round((action.value * state.total) / state.ballNumber),
         }),
         flourWeight: action.value,
       };
 
     case 'waterWeight':
       return {
-        ...calcFromBallWeight({
+        ...calculate({
           ...state,
           ballWeight: round(
             ((action.value / state.water) * state.total) / state.ballNumber
@@ -76,7 +76,7 @@ export const calculatorReducer = (state, action) => {
 
     case 'saltWeight':
       return {
-        ...calcFromBallWeight({
+        ...calculate({
           ...state,
           ballWeight: round(
             ((action.value / (state.salt * 0.01)) * state.total) /
@@ -88,7 +88,7 @@ export const calculatorReducer = (state, action) => {
 
     case 'starterWeight':
       return {
-        ...calcFromBallWeight({
+        ...calculate({
           ...state,
           ballWeight: round(
             ((action.value / (state.starter * 0.01)) * state.total) /
