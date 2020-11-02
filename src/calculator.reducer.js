@@ -11,17 +11,16 @@ export const calculate = ({
   starter,
   starterHydration,
 }) => {
-  const starterPercent = starter * 0.01;
-  const starterFlour = starterPercent / (1 + starterHydration * 0.01);
-  const starterWater = starterPercent - starterFlour;
+  const starterFlour = starter / (1 + starterHydration);
+  const starterWater = starter - starterFlour;
   const totalWeight = ballWeight * ballNumber;
 
-  const water = hydration * 0.01 - starterWater;
-  const total = 1 + water + salt * 0.01 + starter * 0.01;
+  const water = hydration - starterWater;
+  const total = 1 + water + salt + starter;
 
   const flourWeight = totalWeight / total;
-  const saltWeight = flourWeight * (salt * 0.01);
-  const starterWeight = flourWeight * (starter * 0.01);
+  const saltWeight = flourWeight * salt;
+  const starterWeight = flourWeight * starter;
   const waterWeight = flourWeight * water;
 
   return {

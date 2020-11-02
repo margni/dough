@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 export const Number = ({
   max,
   min = '0',
+  modifier = 1,
   onChange,
   readOnly,
   step = 'any',
@@ -12,8 +13,8 @@ export const Number = ({
   const input = useRef();
 
   useEffect(() => {
-    setLocalValue(value.toString());
-  }, [value]);
+    setLocalValue((value * modifier).toString());
+  }, [modifier, value]);
 
   return (
     <input
@@ -28,7 +29,7 @@ export const Number = ({
           event.currentTarget.value !== '' &&
           !isNaN(+event.currentTarget.value)
         ) {
-          onChange(+event.currentTarget.value);
+          onChange(event.currentTarget.value / modifier);
         }
       }}
       onKeyDown={(event) =>

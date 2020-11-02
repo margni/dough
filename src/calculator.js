@@ -20,10 +20,10 @@ export const Calculator = () => {
     {
       ballNumber: 2,
       ballWeight: 250,
-      hydration: 70,
-      starterHydration: 100,
-      salt: 2,
-      starter: 33,
+      hydration: 0.7,
+      starterHydration: 1,
+      salt: 0.02,
+      starter: 0.33,
     },
     (state) => calculate(state)
   );
@@ -55,6 +55,7 @@ export const Calculator = () => {
           max="200"
           min="1"
           onDispatch={dispatch}
+          percentage
           property="hydration"
           state={state}
           step="0.5"
@@ -64,6 +65,7 @@ export const Calculator = () => {
           label="Salt"
           min=".2"
           onDispatch={dispatch}
+          percentage
           property="salt"
           state={state}
           step="0.2"
@@ -73,6 +75,7 @@ export const Calculator = () => {
           label="Starter"
           min="0"
           onDispatch={dispatch}
+          percentage
           property="starter"
           state={state}
           step="0.5"
@@ -82,6 +85,7 @@ export const Calculator = () => {
           label="Starter Hydration"
           min="1"
           onDispatch={dispatch}
+          percentage
           property="starterHydration"
           state={state}
           step="0.5"

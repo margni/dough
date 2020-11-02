@@ -7,6 +7,7 @@ export const CalculatorFigure = ({
   max,
   min,
   onDispatch,
+  percentage,
   property,
   readOnly,
   state,
@@ -19,6 +20,7 @@ export const CalculatorFigure = ({
       <Number
         max={max}
         min={min}
+        modifier={percentage ? 100 : 1}
         onChange={(value) => onDispatch({ type: property, value })}
         readOnly={readOnly}
         step={step}
