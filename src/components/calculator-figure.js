@@ -1,5 +1,7 @@
 import { Number } from './number';
 
+import { round } from '../round';
+
 import styles from './calculator-figure.module.css';
 
 export const CalculatorFigure = ({
@@ -21,11 +23,14 @@ export const CalculatorFigure = ({
         max={max}
         min={min}
         onChange={(value) =>
-          onDispatch({ type: property, value: value / (percentage ? 100 : 1) })
+          onDispatch({
+            type: property,
+            value: round(value * (percentage ? 0.01 : 1), 3),
+          })
         }
         readOnly={readOnly}
         step={step}
-        value={state[property] * (percentage ? 100 : 1)}
+        value={round(state[property] * (percentage ? 100 : 1), 3)}
       />
       {unit}
     </div>

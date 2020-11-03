@@ -21,9 +21,7 @@ export const Number = ({
     }
   };
 
-  useEffect(() => {
-    setLocalValue(value.toString());
-  }, [value]);
+  useEffect(() => setLocalValue(value.toString()), [value]);
 
   return (
     <input

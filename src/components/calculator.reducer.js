@@ -1,7 +1,4 @@
-const rounding = 0;
-
-const round = (value, decimals = rounding) =>
-  Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+import { round } from '../round';
 
 export const calculate = ({
   ballWeight,
@@ -26,7 +23,7 @@ export const calculate = ({
     total,
     water,
     flourWeight: round(flourWeight),
-    saltWeight: round(flourWeight * salt, rounding || 1),
+    saltWeight: round(flourWeight * salt, 1),
     starterWeight: round(flourWeight * starter),
     waterWeight: round(flourWeight * water),
   };
