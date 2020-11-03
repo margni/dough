@@ -1,4 +1,5 @@
 import { Calculator } from './calculator';
+import { Details } from './details';
 
 import logo from '../logo.svg';
 import styles from './app.module.css';
@@ -11,12 +12,12 @@ export const App = () => (
       <h2>Sourdough Calculator</h2>
     </header>
     <div>
-      <p>
+      <Details summary="Help?">
         All figures are editable and changes will adjust other figures
         accordingly.
         <br />
         Also note that all figures are required.
-      </p>
+      </Details>
       <Calculator />
     </div>
     <footer>

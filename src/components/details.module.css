@@ -1,0 +1,25 @@
+.host {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.host[open] {
+  background: #fff;
+}
+
+.host > summary {
+  font-size: var(--font-size-regular);
+  transition: color 0.3s ease;
+}
+
+.host[open],
+.host > summary:hover,
+.host > summary:focus {
+  color: var(--color-text-primary);
+}
+
+.host[open] > summary {
+  margin-bottom: 0.5rem;
+}
