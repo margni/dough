@@ -15,7 +15,7 @@ export const App = () => (
         All figures are editable and changes will adjust other figures
         accordingly.
         <br />
-        Also note that all firelds are required.
+        Also note that all figures are required.
       </p>
       <Calculator />
     </div>

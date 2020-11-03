@@ -85,6 +85,7 @@ export const calculatorReducer = (state, action) => {
         starterWeight: action.value,
       };
 
+    /* istanbul ignore next */
     default:
       throw new Error();
   }

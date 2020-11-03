@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { Number } from './number';
 
 test('Has value.', () => {
-  render(<Number onChange={() => {}} value="2" />);
+  render(<Number value="2" />);
 
   expect(screen.getByRole('spinbutton')).toHaveDisplayValue('2');
 });
@@ -14,9 +14,11 @@ test("Doesn't call onChange on invalid change.", () => {
 
   render(<Number onChange={fn} value={0} step=".2" />);
 
-  userEvent.type(screen.getByRole('spinbutton'), '.1');
+  const input = screen.getByRole('spinbutton');
 
-  expect(screen.getByRole('spinbutton')).toHaveDisplayValue('0.1');
+  userEvent.type(input, '.1');
+
+  expect(input).toHaveDisplayValue('0.1');
   expect(fn).not.toHaveBeenCalled();
 });
 
@@ -28,4 +30,18 @@ test('Calls onChange on valid change.', () => {
   userEvent.type(screen.getByRole('spinbutton'), '{backspace}1');
 
   expect(fn).toHaveBeenCalledWith(1);
+});
+
+test('Blurs on Enter.', () => {
+  render(<Number value="1" />);
+
+  const input = screen.getByRole('spinbutton');
+
+  userEvent.click(input);
+
+  expect(input).toHaveFocus();
+
+  userEvent.type(input, '{enter}');
+
+  expect(input).not.toHaveFocus();
 });
