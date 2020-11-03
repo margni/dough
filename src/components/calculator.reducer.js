@@ -14,8 +14,8 @@ export const calculate = ({
   const flourWeight = (ballWeight * ballNumber) / total;
 
   return {
-    ballWeight,
     ballNumber,
+    ballWeight,
     hydration,
     salt,
     starter,
@@ -34,16 +34,12 @@ const calculateWeight = (flourWeight, state) =>
 
 export const calculatorReducer = (state, action) => {
   switch (action.type) {
-    case 'ballWeight':
-      return calculate({ ...state, ballWeight: action.value });
-
     case 'ballNumber':
-      return calculate({ ...state, ballNumber: action.value });
-
+    case 'ballWeight':
     case 'hydration':
-    case 'starterHydration':
     case 'salt':
     case 'starter':
+    case 'starterHydration':
       return calculate({ ...state, [action.type]: action.value });
 
     case 'flourWeight':

@@ -1,6 +1,7 @@
 import { useReducer } from 'react';
 
 import { CalculatorFigure } from './calculator-figure';
+import { Fieldset } from './fieldset';
 
 import { calculate, calculatorReducer } from './calculator.reducer';
 
@@ -21,17 +22,16 @@ export const Calculator = () => {
       ballNumber: 2,
       ballWeight: 250,
       hydration: 0.7,
-      starterHydration: 1,
       salt: 0.02,
       starter: 0.33,
+      starterHydration: 1,
     },
     (state) => calculate(state)
   );
 
   return (
     <form className={styles.host}>
-      <fieldset>
-        <legend>Doughballs</legend>
+      <Fieldset legend="Doughballs">
         <CalculatorFigure
           label="Count"
           min="1"
@@ -48,9 +48,8 @@ export const Calculator = () => {
           state={state}
           unit="g"
         />
-      </fieldset>
-      <fieldset>
-        <legend>Baker’s Percentages</legend>
+      </Fieldset>
+      <Fieldset legend="Baker’s Percentages">
         <CalculatorFigure
           label="Hydration"
           max="200"
@@ -93,9 +92,8 @@ export const Calculator = () => {
           step="0.5"
           unit="%"
         />
-      </fieldset>
-      <fieldset>
-        <legend>Your Recipe</legend>
+      </Fieldset>
+      <Fieldset legend="Your Recipe">
         <CalculatorFigure
           label="Flour"
           min="1"
@@ -129,7 +127,7 @@ export const Calculator = () => {
           state={state}
           unit="g"
         />
-      </fieldset>
+      </Fieldset>
     </form>
   );
 };

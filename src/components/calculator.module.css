@@ -2,17 +2,3 @@
   display: flex;
   flex-direction: column;
 }
-
-.host fieldset {
-  border: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
-}
-
-.host legend {
-  font-size: var(--font-size-subheading);
-  padding: 1rem 0 0;
-}
