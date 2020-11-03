@@ -6,6 +6,8 @@
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.0",
@@ -20,8 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:coverage": "react-scripts test --coverage --watchAll=false",
-    "eject": "react-scripts eject"
+    "test:coverage": "react-scripts test --coverage --watchAll=false"
   },
   "husky": {
     "hooks": {
@@ -29,9 +30,14 @@
     }
   },
   "eslintConfig": {
+    "plugins": [
+      "sonarjs"
+    ],
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:sonarjs/recommended",
+      "prettier"
     ]
   },
   "browserslist": {

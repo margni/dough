@@ -1,11 +1,22 @@
+:root {
+  --color-background: #ffe;
+  --color-text-primary: #332;
+  --color-text-secondary: rgba(51, 51, 34, 0.6);
+  --font-size-small: 0.75rem;
+  --font-size-regular: 1rem;
+  --font-size-large: 1.25rem;
+  --font-size-subheading: 1.5rem;
+  --font-size-heading: 1.75rem;
+}
+
 html {
   height: 100%;
 }
 
 body {
   align-items: center;
-  background: #ffe;
-  color: #332;
+  background: var(--color-background);
+  color: var(--color-text-primary);
   display: flex;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',

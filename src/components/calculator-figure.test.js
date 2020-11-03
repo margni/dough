@@ -9,12 +9,6 @@ test('Has value from state object.', () => {
   expect(screen.getByRole('spinbutton')).toHaveDisplayValue('2');
 });
 
-test('Renders % as whole number', () => {
-  render(<CalculatorFigure percentage state={{ test: 0.1 }} property="test" />);
-
-  expect(screen.getByRole('spinbutton')).toHaveDisplayValue('10');
-});
-
 test('Calls dispatcher on change.', () => {
   const fn = jest.fn();
 
@@ -25,4 +19,25 @@ test('Calls dispatcher on change.', () => {
   userEvent.type(screen.getByRole('spinbutton'), '1');
 
   expect(fn).toHaveBeenCalledWith({ type: 'test', value: 1 });
+});
+
+test('Converts percentage values.', () => {
+  const fn = jest.fn();
+
+  render(
+    <CalculatorFigure
+      onDispatch={fn}
+      percentage
+      state={{ test: 0.1 }}
+      property="test"
+    />
+  );
+
+  const input = screen.getByRole('spinbutton');
+
+  expect(input).toHaveDisplayValue('10');
+
+  userEvent.type(input, '{backspace}{backspace}20');
+
+  expect(fn).toHaveBeenLastCalledWith({ type: 'test', value: 0.2 });
 });

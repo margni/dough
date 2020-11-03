@@ -1,8 +1,8 @@
 .host {
   box-sizing: border-box;
-  color: rgba(51, 51, 34, 0.5);
+  color: var(--color-text-secondary);
   display: block;
-  font-size: 1rem;
+  font-size: var(--font-size-regular);
   margin: 0;
   padding: 0.25rem 0.5rem;
   text-align: right;
@@ -13,21 +13,21 @@
 .host input {
   background: transparent;
   border: 0;
-  border-bottom: 2px dashed rgba(51, 51, 34, 0);
-  color: #332;
-  font-size: 1.25rem;
+  border-bottom: 2px dashed transparent;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-large);
   text-align: right;
   transition: all 0.5s ease;
   width: 6rem;
 }
 
 .host label:hover {
-  color: #332;
+  color: var(--color-text-primary);
 }
 
 .host label:hover input,
 .host input:focus {
-  border-color: rgba(51, 51, 34, 0.75);
+  border-color: var(--color-text-secondary);
 }
 
 .host input:focus {

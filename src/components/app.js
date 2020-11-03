@@ -10,7 +10,15 @@ export const App = () => (
       <img src={logo} alt="" />
       <h2>Sourdough Calculator</h2>
     </header>
-    <Calculator />
+    <div>
+      <p>
+        All figures are editable and changes will adjust other figures
+        accordingly.
+        <br />
+        Also note that all firelds are required.
+      </p>
+      <Calculator />
+    </div>
     <footer>
       © <a href="http://margni.com">Margni Ltd.</a> 2020 –{' '}
       <a href="https://github.com/margni/dough">Source</a>

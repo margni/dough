@@ -25,19 +25,7 @@ test('Calls onChange on valid change.', () => {
 
   render(<Number onChange={fn} value={0} />);
 
-  userEvent.type(screen.getByRole('spinbutton'), '1');
+  userEvent.type(screen.getByRole('spinbutton'), '{backspace}1');
 
   expect(fn).toHaveBeenCalledWith(1);
-});
-
-test('Modifier works', () => {
-  const fn = jest.fn();
-
-  render(<Number modifier={100} onChange={fn} value={0.1} />);
-
-  expect(screen.getByRole('spinbutton')).toHaveDisplayValue('10');
-
-  userEvent.type(screen.getByRole('spinbutton'), '{backspace}{backspace}20');
-
-  expect(fn).toHaveBeenLastCalledWith(0.2);
 });
