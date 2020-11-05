@@ -8,6 +8,7 @@
   text-align: right;
   transition: all 0.5s ease;
   width: 50%;
+  height: 4.5rem;
 }
 
 .host input {
@@ -48,9 +49,15 @@
   border-color: red;
 }
 
+.host strong {
+  color: red;
+  font-weight: 400;
+  font-size: var(--font-size-small);
+}
+
 @media only screen and (min-width: 512px) {
   .host {
     box-sizing: content-box;
-    width: 8rem;
+    width: 10rem;
   }
 }

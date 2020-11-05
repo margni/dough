@@ -45,3 +45,26 @@ test('Blurs on Enter.', () => {
 
   expect(input).not.toHaveFocus();
 });
+
+test('Cycles between validity states.', () => {
+  const invalid = jest.fn();
+  const valid = jest.fn();
+
+  render(
+    <Number onChange={() => {}} onInvalid={invalid} onValid={valid} value="1" />
+  );
+
+  const input = screen.getByRole('spinbutton');
+
+  userEvent.type(input, '{backspace}');
+
+  expect(invalid).toHaveBeenCalledTimes(1);
+  expect(invalid).toHaveBeenCalledWith(expect.any(ValidityState));
+  expect(valid).not.toHaveBeenCalled();
+
+  userEvent.type(input, '1');
+
+  expect(invalid).toHaveBeenCalledTimes(1);
+  expect(valid).toHaveBeenCalledTimes(1);
+  expect(valid).toHaveBeenCalledWith();
+});

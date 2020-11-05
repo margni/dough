@@ -10,6 +10,7 @@
 }
 
 .host > summary {
+  border-bottom: 2px dashed transparent;
   font-size: var(--font-size-regular);
   transition: color 0.3s ease;
 }
@@ -18,6 +19,11 @@
 .host > summary:hover,
 .host > summary:focus {
   color: var(--color-text-primary);
+}
+
+.host > summary:focus {
+  border-color: var(--color-text-secondary);
+  outline: none;
 }
 
 .host[open] > summary {

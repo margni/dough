@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 
 export const Number = ({
+  ariaDescribedby,
   max,
   min = '0',
   onChange,
+  onInvalid = () => undefined,
+  onValid = () => undefined,
   readOnly,
   step = 'any',
   value,
@@ -18,6 +21,9 @@ export const Number = ({
       !isNaN(+event.currentTarget.value)
     ) {
       onChange(+event.currentTarget.value);
+      onValid();
+    } else {
+      onInvalid(event.currentTarget.validity);
     }
   };
 
@@ -25,6 +31,8 @@ export const Number = ({
 
   return (
     <input
+      aria-describedby={ariaDescribedby}
+      aria-invalid={!input.current?.validity.valid}
       max={max}
       min={min}
       onChange={handleChange}
