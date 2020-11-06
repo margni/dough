@@ -23,7 +23,13 @@ export const Number = ({
       onChange(+event.currentTarget.value);
       onValid();
     } else {
-      onInvalid(event.currentTarget.validity);
+      onInvalid({
+        valid: false,
+        valueMissing: event.currentTarget.validity.valueMissing,
+        rangeUnderflow: event.currentTarget.validity.rangeUnderflow,
+        rangeOverflow: event.currentTarget.validity.rangeOverflow,
+        stepMismatch: event.currentTarget.validity.stepMismatch,
+      });
     }
   };
 

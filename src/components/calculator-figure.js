@@ -44,17 +44,13 @@ export const CalculatorFigure = ({
           {unit}
         </div>
       </label>
-      {error?.valueMissing && (
-        <strong id={`${property}-error`}>Required</strong>
-      )}
-      {error?.rangeUnderflow && (
-        <strong id={`${property}-error`}>Too low, minimum {min}</strong>
-      )}
-      {error?.rangeOverflow && (
-        <strong id={`${property}-error`}>Too high, maximum {max}</strong>
-      )}
-      {error?.stepMismatch && (
-        <strong id={`${property}-error`}>Must be multiple of {step}</strong>
+      {error && (
+        <strong id={`${property}-error`}>
+          {error.valueMissing && <>Required</>}
+          {error.rangeUnderflow && <> Too low, minimum {min}</>}
+          {error.rangeOverflow && <> Too high, maximum {max}</>}
+          {error.stepMismatch && <> Must be multiple of {step}</>}
+        </strong>
       )}
     </div>
   );

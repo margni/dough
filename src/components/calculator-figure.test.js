@@ -41,3 +41,35 @@ test('Converts percentage values.', () => {
 
   expect(fn).toHaveBeenLastCalledWith({ type: 'test', value: 0.2 });
 });
+
+test('Displays validity errors.', async () => {
+  render(
+    <CalculatorFigure
+      label="Test"
+      onDispatch={() => {}}
+      state={{ test: 2 }}
+      property="test"
+      max="3"
+      min="2"
+      step="1"
+    />
+  );
+
+  const input = screen.getByRole('spinbutton');
+
+  userEvent.type(input, '{backspace}');
+
+  expect(screen.getByText('Required')).toBeTruthy();
+
+  userEvent.type(input, '4');
+
+  expect(screen.getByText('Too high, maximum 3')).toBeTruthy();
+
+  userEvent.type(input, '{backspace}1');
+
+  expect(screen.getByText('Too low, minimum 2')).toBeTruthy();
+
+  userEvent.type(input, '{backspace}2.5');
+
+  expect(screen.getByText('Must be multiple of 1')).toBeTruthy();
+});

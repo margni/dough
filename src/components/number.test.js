@@ -59,7 +59,6 @@ test('Cycles between validity states.', () => {
   userEvent.type(input, '{backspace}');
 
   expect(invalid).toHaveBeenCalledTimes(1);
-  expect(invalid).toHaveBeenCalledWith(expect.any(ValidityState));
   expect(valid).not.toHaveBeenCalled();
 
   userEvent.type(input, '1');
