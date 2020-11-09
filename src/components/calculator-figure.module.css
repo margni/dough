@@ -26,14 +26,19 @@
   color: var(--color-text-primary);
 }
 
-.host label:hover input,
-.host input:focus {
-  border-color: var(--color-text-secondary);
+.host input:invalid {
+  color: red;
+  border-color: red;
 }
 
 .host input:focus {
   background: #fff;
   outline: none;
+}
+
+.host input:focus,
+.host label:hover input {
+  border-color: var(--color-text-secondary);
 }
 
 .host input[type='number'] {
@@ -42,11 +47,6 @@
 
 .host input[type='number']::-webkit-inner-spin-button {
   -webkit-appearance: none;
-}
-
-.host input:invalid {
-  color: red;
-  border-color: red;
 }
 
 .host strong {
