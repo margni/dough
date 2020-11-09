@@ -16,9 +16,9 @@ test("Doesn't call onChange on invalid change.", () => {
 
   const input = screen.getByRole('spinbutton');
 
-  userEvent.type(input, '.1');
+  userEvent.type(input, '{backspace}.1');
 
-  expect(input).toHaveDisplayValue('0.1');
+  expect(input).toHaveDisplayValue('.1');
   expect(fn).not.toHaveBeenCalled();
 });
 

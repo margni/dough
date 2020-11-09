@@ -4,19 +4,24 @@ import userEvent from '@testing-library/user-event';
 import { CalculatorFigure } from './calculator-figure';
 
 test('Has value from state object.', () => {
-  render(<CalculatorFigure state={{ test: 2 }} property="test" />);
+  render(<CalculatorFigure label="Test" property="test" state={{ test: 2 }} />);
 
-  expect(screen.getByRole('spinbutton')).toHaveDisplayValue('2');
+  expect(screen.getByLabelText('Test')).toHaveDisplayValue('2');
 });
 
 test('Calls dispatcher on change.', () => {
   const fn = jest.fn();
 
   render(
-    <CalculatorFigure onDispatch={fn} state={{ test: 0 }} property="test" />
+    <CalculatorFigure
+      label="Test"
+      onDispatch={fn}
+      property="test"
+      state={{ test: 0 }}
+    />
   );
 
-  userEvent.type(screen.getByRole('spinbutton'), '1');
+  userEvent.type(screen.getByLabelText('Test'), '1');
 
   expect(fn).toHaveBeenCalledWith({ type: 'test', value: 1 });
 });
@@ -26,14 +31,15 @@ test('Converts percentage values.', () => {
 
   render(
     <CalculatorFigure
+      label="Test"
       onDispatch={fn}
       percentage
-      state={{ test: 0.1 }}
       property="test"
+      state={{ test: 0.1 }}
     />
   );
 
-  const input = screen.getByRole('spinbutton');
+  const input = screen.getByLabelText('Test');
 
   expect(input).toHaveDisplayValue('10');
 
@@ -46,30 +52,30 @@ test('Displays validity errors.', async () => {
   render(
     <CalculatorFigure
       label="Test"
-      onDispatch={() => {}}
-      state={{ test: 2 }}
-      property="test"
       max="3"
       min="2"
+      onDispatch={() => {}}
+      property="test"
+      state={{ test: 2 }}
       step="1"
     />
   );
 
-  const input = screen.getByRole('spinbutton');
+  const input = screen.getByLabelText('Test');
 
   userEvent.type(input, '{backspace}');
 
-  expect(screen.getByText('Required')).toBeTruthy();
+  expect(screen.getByText('Required')).toBeInTheDocument();
 
   userEvent.type(input, '4');
 
-  expect(screen.getByText('Too high, maximum 3')).toBeTruthy();
+  expect(screen.getByText('Too high, maximum 3')).toBeInTheDocument();
 
   userEvent.type(input, '{backspace}1');
 
-  expect(screen.getByText('Too low, minimum 2')).toBeTruthy();
+  expect(screen.getByText('Too low, minimum 2')).toBeInTheDocument();
 
   userEvent.type(input, '{backspace}2.5');
 
-  expect(screen.getByText('Must be multiple of 1')).toBeTruthy();
+  expect(screen.getByText('Must be multiple of 1')).toBeInTheDocument();
 });

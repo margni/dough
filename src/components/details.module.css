@@ -1,8 +1,8 @@
 .host {
   color: var(--color-text-secondary);
   font-size: var(--font-size-small);
-  padding: 1rem;
-  transition: all 0.3s ease;
+  padding: var(--pad-large);
+  transition: all var(--animation) ease;
 }
 
 .host[open] {
@@ -12,7 +12,7 @@
 .host > summary {
   border-bottom: 2px dashed transparent;
   font-size: var(--font-size-regular);
-  transition: color 0.3s ease;
+  transition: color var(--animation) ease;
 }
 
 .host[open],

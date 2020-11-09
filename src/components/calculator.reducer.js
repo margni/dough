@@ -1,6 +1,8 @@
+import { useReducer } from 'react';
+
 import { round } from '../round';
 
-export const calculate = ({
+const calculate = ({
   ballWeight,
   ballNumber,
   hydration,
@@ -32,7 +34,7 @@ export const calculate = ({
 const calculateWeight = (flourWeight, state) =>
   round((flourWeight * state.total) / state.ballNumber);
 
-export const calculatorReducer = (state, action) => {
+const calculatorReducer = (state, action) => {
   switch (action.type) {
     case 'ballNumber':
     case 'ballWeight':
@@ -83,3 +85,17 @@ export const calculatorReducer = (state, action) => {
       throw new Error();
   }
 };
+
+export const useCalculatorReducer = () =>
+  useReducer(
+    calculatorReducer,
+    {
+      ballNumber: 2,
+      ballWeight: 250,
+      hydration: 0.7,
+      salt: 0.02,
+      starter: 0.33,
+      starterHydration: 1,
+    },
+    (state) => calculate(state)
+  );

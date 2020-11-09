@@ -4,9 +4,9 @@
   display: block;
   font-size: var(--font-size-regular);
   margin: 0;
-  padding: 0.25rem 0.5rem;
+  padding: var(--pad-small) var(--pad-medium);
   text-align: right;
-  transition: all 0.5s ease;
+  transition: all var(--animation) ease;
   width: 50%;
   height: 4.5rem;
 }
@@ -18,7 +18,7 @@
   color: var(--color-text-primary);
   font-size: var(--font-size-large);
   text-align: right;
-  transition: all 0.5s ease;
+  transition: all var(--animation) ease;
   width: 6rem;
 }
 

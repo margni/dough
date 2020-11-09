@@ -1,9 +1,7 @@
-import { useReducer } from 'react';
+import { useCalculatorReducer } from './calculator.reducer';
 
 import { CalculatorFigure } from './calculator-figure';
 import { Fieldset } from './fieldset';
-
-import { calculate, calculatorReducer } from './calculator.reducer';
 
 import styles from './calculator.module.css';
 
@@ -14,20 +12,9 @@ import styles from './calculator.module.css';
 // TODO FEATURE Ability to save your recipe.
 // TODO FEATURE Add presets.
 // TODO FEATURE Ability to use yeast instead of starter, this would work just like an extra ingredient.
-// TODO FEATURE Ability to expand and collapse sections, or perhaps step through wizard style and be presended with weights at the end.
+// TODO FEATURE Ability to expand and collapse sections, or perhaps step through wizard style and be presented with weights at the end.
 export const Calculator = () => {
-  const [state, dispatch] = useReducer(
-    calculatorReducer,
-    {
-      ballNumber: 2,
-      ballWeight: 250,
-      hydration: 0.7,
-      salt: 0.02,
-      starter: 0.33,
-      starterHydration: 1,
-    },
-    (state) => calculate(state)
-  );
+  const [state, dispatch] = useCalculatorReducer();
 
   return (
     <form className={styles.host}>
