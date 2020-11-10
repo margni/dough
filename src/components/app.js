@@ -9,7 +9,7 @@ export const App = () => (
     <header>
       <h1>Dough</h1>
       <img src={logo} alt="" />
-      <h2>Sourdough Calculator</h2>
+      <h2>Sourdough Pizza Calculator</h2>
     </header>
     <div>
       <Details summary="Help?">
