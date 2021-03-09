@@ -39,7 +39,7 @@ jobs:
   preview:
     needs: build
     runs-on: ubuntu-latest
-    if: github.base_ref == 'refs/heads/master'
+    if: github.event.pull_request.base.ref == 'master'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
