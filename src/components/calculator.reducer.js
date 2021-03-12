@@ -31,53 +31,53 @@ const calculate = ({
   };
 };
 
-const calculateWeight = (flourWeight, state) =>
-  round((flourWeight * state.total) / state.ballNumber);
+const calculateWeight = (flourWeight, { ballNumber, total }) =>
+  round((flourWeight * total) / ballNumber);
 
-const calculatorReducer = (state, action) => {
-  switch (action.type) {
+const calculatorReducer = (state, { type, value }) => {
+  switch (type) {
     case 'ballNumber':
     case 'ballWeight':
     case 'hydration':
     case 'salt':
     case 'starter':
     case 'starterHydration':
-      return calculate({ ...state, [action.type]: action.value });
+      return calculate({ ...state, [type]: value });
 
     case 'flourWeight':
       return {
         ...calculate({
           ...state,
-          ballWeight: calculateWeight(action.value, state),
+          ballWeight: calculateWeight(value, state),
         }),
-        flourWeight: action.value,
+        flourWeight: value,
       };
 
     case 'waterWeight':
       return {
         ...calculate({
           ...state,
-          ballWeight: calculateWeight(action.value / state.water, state),
+          ballWeight: calculateWeight(value / state.water, state),
         }),
-        waterWeight: action.value,
+        waterWeight: value,
       };
 
     case 'saltWeight':
       return {
         ...calculate({
           ...state,
-          ballWeight: calculateWeight(action.value / state.salt, state),
+          ballWeight: calculateWeight(value / state.salt, state),
         }),
-        saltWeight: action.value,
+        saltWeight: value,
       };
 
     case 'starterWeight':
       return {
         ...calculate({
           ...state,
-          ballWeight: calculateWeight(action.value / state.starter, state),
+          ballWeight: calculateWeight(value / state.starter, state),
         }),
-        starterWeight: action.value,
+        starterWeight: value,
       };
 
     /* istanbul ignore next */
@@ -86,16 +86,5 @@ const calculatorReducer = (state, action) => {
   }
 };
 
-export const useCalculatorReducer = () =>
-  useReducer(
-    calculatorReducer,
-    {
-      ballNumber: 2,
-      ballWeight: 250,
-      hydration: 0.7,
-      salt: 0.02,
-      starter: 0.33,
-      starterHydration: 1,
-    },
-    (state) => calculate(state)
-  );
+export const useCalculatorReducer = (defaultRecipe) =>
+  useReducer(calculatorReducer, defaultRecipe, (state) => calculate(state));
