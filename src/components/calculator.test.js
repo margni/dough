@@ -1,9 +1,12 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { Calculator } from './calculator';
 
-const change = (labelText, value) =>
-  fireEvent.change(screen.getByLabelText(labelText), { target: { value } });
+const change = (labelText, value, input = screen.getByLabelText(labelText)) => {
+  userEvent.clear(input);
+  userEvent.type(input, value);
+};
 
 const configure = () => {
   change('Count', '1');
