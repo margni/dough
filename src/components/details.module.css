@@ -6,7 +6,7 @@
 }
 
 .host[open] {
-  background: #fff;
+  background: var(--color-background-alternative);
 }
 
 .host > summary {

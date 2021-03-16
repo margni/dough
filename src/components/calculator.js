@@ -10,6 +10,7 @@ import styles from './calculator.module.css';
 // TODO FEATURE Ability to add extra ingredients.
 // TODO FEATURE Ability to specify multiple flour types.
 // TODO FEATURE Ability to save your recipe.
+// TODO FEATURE Recipe in querystring
 // TODO FEATURE Add presets.
 // TODO FEATURE Ability to use yeast instead of starter, this would work just like an extra ingredient.
 // TODO FEATURE Ability to expand and collapse sections, or perhaps step through wizard style and be presented with weights at the end.
@@ -21,6 +22,11 @@ export const Calculator = () => {
     salt: 0.02,
     starter: 0.33,
     starterHydration: 1,
+    flours: {
+      Flour: {
+        percent: 1,
+      },
+    },
   });
 
   return (
@@ -88,14 +94,19 @@ export const Calculator = () => {
         />
       </Fieldset>
       <Fieldset legend="Your Recipe">
-        <CalculatorFigure
-          label="Flour"
-          min="1"
-          onDispatch={dispatch}
-          property="flourWeight"
-          state={state}
-          unit="g"
-        />
+        {Object.entries(state.flours).map(([label, flour]) => (
+          <CalculatorFigure
+            key={label}
+            label={label}
+            min="1"
+            onDispatch={(action) =>
+              dispatch({ ...action, type: 'flourWeight', property: label })
+            }
+            property="weight"
+            state={flour}
+            unit="g"
+          />
+        ))}
         <CalculatorFigure
           label="Water"
           min="1"
