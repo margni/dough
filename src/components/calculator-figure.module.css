@@ -27,12 +27,12 @@
 }
 
 .host input:invalid {
-  color: red;
-  border-color: red;
+  border-color: var(--color-error);
+  color: var(--color-error);
 }
 
 .host input:focus {
-  background: #fff;
+  background: var(--color-background-alternative);
   outline: none;
 }
 
@@ -50,7 +50,7 @@
 }
 
 .host strong {
-  color: red;
+  color: var(--color-error);
   font-weight: 400;
   font-size: var(--font-size-small);
 }

@@ -2,6 +2,14 @@ import { useReducer } from 'react';
 
 import { round } from '../round';
 
+const objectMap = (object, callback) =>
+  Object.fromEntries(
+    Object.entries(object).map(([property, value]) => [
+      property,
+      callback(value, property),
+    ])
+  );
+
 const calculate = ({
   ballWeight,
   ballNumber,
@@ -9,6 +17,7 @@ const calculate = ({
   salt,
   starter,
   starterHydration,
+  flours,
 }) => {
   const water = hydration - (starter - starter / (1 + starterHydration));
   const total = 1 + water + salt + starter;
@@ -24,17 +33,26 @@ const calculate = ({
     starterHydration,
     total,
     water,
-    flourWeight: round(flourWeight),
     saltWeight: round(flourWeight * salt, 1),
     starterWeight: round(flourWeight * starter),
     waterWeight: round(flourWeight * water),
+    flours: objectMap(flours, ({ percent }) => ({
+      percent,
+      weight: round(flourWeight * percent),
+    })),
   };
 };
 
 const calculateWeight = (flourWeight, { ballNumber, total }) =>
   round((flourWeight * total) / ballNumber);
 
-const calculatorReducer = (state, { type, value }) => {
+const calculateBall = (state, flourWeight) =>
+  calculate({
+    ...state,
+    ballWeight: calculateWeight(flourWeight, state),
+  });
+
+const calculatorReducer = (state, { property, type, value }) => {
   switch (type) {
     case 'ballNumber':
     case 'ballWeight':
@@ -45,38 +63,29 @@ const calculatorReducer = (state, { type, value }) => {
       return calculate({ ...state, [type]: value });
 
     case 'flourWeight':
-      return {
-        ...calculate({
-          ...state,
-          ballWeight: calculateWeight(value, state),
-        }),
-        flourWeight: value,
-      };
+      const newState = calculateBall(
+        state,
+        value / state.flours[property].percent
+      );
+      newState.flours[property].weight = value;
+
+      return newState;
 
     case 'waterWeight':
       return {
-        ...calculate({
-          ...state,
-          ballWeight: calculateWeight(value / state.water, state),
-        }),
+        ...calculateBall(state, value / state.water),
         waterWeight: value,
       };
 
     case 'saltWeight':
       return {
-        ...calculate({
-          ...state,
-          ballWeight: calculateWeight(value / state.salt, state),
-        }),
+        ...calculateBall(state, value / state.salt),
         saltWeight: value,
       };
 
     case 'starterWeight':
       return {
-        ...calculate({
-          ...state,
-          ballWeight: calculateWeight(value / state.starter, state),
-        }),
+        ...calculateBall(state, value / state.starter),
         starterWeight: value,
       };
 
