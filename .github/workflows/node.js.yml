@@ -40,6 +40,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: github.event.pull_request.base.ref == 'master'
+    outputs:
+      details_url: ${{ steps.deployPreview.outputs.details_url }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
@@ -47,12 +49,38 @@ jobs:
           name: build
           path: build
       - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: deployPreview
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_MARGNI_DOUGH }}'
           projectId: margni-dough
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels
+
+  end-to-end:
+    needs: preview
+    runs-on: ubuntu-16.04
+    env:
+      NODE_ENV: development
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_BASE_URL: ${{ needs.preview.outputs.details_url }}
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - name: Upload Videos
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
 
   deploy:
     needs: build
