@@ -59,7 +59,7 @@ jobs:
 
   end-to-end:
     needs: preview
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     env:
       NODE_ENV: development
     steps:
