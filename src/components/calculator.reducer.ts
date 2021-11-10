@@ -2,13 +2,35 @@ import { useReducer } from 'react';
 
 import { round } from '../round';
 
-const objectMap = (object, callback) =>
+export type Flour = { percent: number; weight?: number };
+
+export type Flours = Record<string, Flour>;
+
+export type Recipe = {
+  ballNumber: number;
+  ballWeight: number;
+  hydration: number;
+  salt: number;
+  starter: number;
+  starterHydration: number;
+  flours: Flours;
+};
+
+export type State = Recipe & {
+  total: number;
+  water: number;
+  saltWeight: number;
+  starterWeight: number;
+  waterWeight: number;
+};
+
+const flourMap = (
+  flours: Flours,
+  callback: (flour: Flour, name: string) => Flour
+) =>
   Object.fromEntries(
-    Object.entries(object).map(([property, value]) => [
-      property,
-      callback(value, property),
-    ])
-  );
+    Object.entries(flours).map(([name, flour]) => [name, callback(flour, name)])
+  ) as unknown as Flours;
 
 const calculate = ({
   ballWeight,
@@ -18,7 +40,7 @@ const calculate = ({
   starter,
   starterHydration,
   flours,
-}) => {
+}: Recipe): State => {
   const water = hydration - (starter - starter / (1 + starterHydration));
   const total = 1 + water + salt + starter;
 
@@ -36,23 +58,28 @@ const calculate = ({
     saltWeight: round(flourWeight * salt, 1),
     starterWeight: round(flourWeight * starter),
     waterWeight: round(flourWeight * water),
-    flours: objectMap(flours, ({ percent }) => ({
+    flours: flourMap(flours, ({ percent }) => ({
       percent,
       weight: round(flourWeight * percent),
     })),
   };
 };
 
-const calculateWeight = (flourWeight, { ballNumber, total }) =>
-  round((flourWeight * total) / ballNumber);
+const calculateWeight = (
+  flourWeight: number,
+  { ballNumber, total }: { ballNumber: number; total: number }
+) => round((flourWeight * total) / ballNumber);
 
-const calculateBall = (state, flourWeight) =>
+const calculateBall = (state: State, flourWeight: number) =>
   calculate({
     ...state,
     ballWeight: calculateWeight(flourWeight, state),
   });
 
-const calculatorReducer = (state, { property, type, value }) => {
+const calculatorReducer = (
+  state: State,
+  { property, type, value }: { property?: string; type: string; value: number }
+) => {
   switch (type) {
     case 'ballNumber':
     case 'ballWeight':
@@ -63,6 +90,11 @@ const calculatorReducer = (state, { property, type, value }) => {
       return calculate({ ...state, [type]: value });
 
     case 'flourWeight':
+      /* istanbul ignore next */
+      if (!property) {
+        throw new Error(`'flourWeight' without 'property'.`);
+      }
+
       const newState = calculateBall(
         state,
         value / state.flours[property].percent
@@ -95,5 +127,5 @@ const calculatorReducer = (state, { property, type, value }) => {
   }
 };
 
-export const useCalculatorReducer = (defaultRecipe) =>
+export const useCalculatorReducer = (defaultRecipe: Recipe) =>
   useReducer(calculatorReducer, defaultRecipe, (state) => calculate(state));
