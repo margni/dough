@@ -1,4 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { FormEventHandler, useEffect, useRef, useState } from 'react';
+
+export type Validity = Pick<
+  ValidityState,
+  'valid' | 'valueMissing' | 'rangeOverflow' | 'rangeUnderflow' | 'stepMismatch'
+>;
 
 export const Number = ({
   ariaDescribedby,
@@ -7,13 +12,23 @@ export const Number = ({
   onChange,
   onInvalid = () => undefined,
   onValid = () => undefined,
-  readOnly,
+  readOnly = false,
   step = 'any',
   value,
+}: {
+  ariaDescribedby?: string;
+  max?: string;
+  min?: string;
+  onChange: (number: number) => void;
+  onInvalid?: (validity: Validity) => void;
+  onValid?: (validity: undefined) => void;
+  readOnly?: boolean;
+  step?: string;
+  value: number;
 }) => {
-  const [localValue, setLocalValue] = useState(value);
-  const input = useRef();
-  const handleChange = (event) => {
+  const [localValue, setLocalValue] = useState(value.toString());
+  const input = useRef<HTMLInputElement>(null);
+  const handleChange: FormEventHandler<HTMLInputElement> = (event) => {
     setLocalValue(event.currentTarget.value);
 
     if (
@@ -21,7 +36,7 @@ export const Number = ({
       !isNaN(+event.currentTarget.value)
     ) {
       onChange(+event.currentTarget.value);
-      onValid();
+      onValid(undefined);
     } else {
       onInvalid({
         valid: false,
@@ -43,7 +58,7 @@ export const Number = ({
       min={min}
       onChange={handleChange}
       onKeyDown={(event) =>
-        event.nativeEvent.key === 'Enter' && input.current.blur()
+        event.nativeEvent.key === 'Enter' && input.current?.blur()
       }
       readOnly={readOnly}
       ref={input}

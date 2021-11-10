@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { Number } from './number';
 
 test('Has value.', () => {
-  render(<Number value="2" />);
+  render(<Number onChange={() => {}} value={2} />);
 
   expect(screen.getByRole('spinbutton')).toHaveDisplayValue('2');
 });
@@ -33,7 +33,7 @@ test('Calls onChange on valid change.', () => {
 });
 
 test('Blurs on Enter.', () => {
-  render(<Number value="1" />);
+  render(<Number onChange={() => {}} value={1} />);
 
   const input = screen.getByRole('spinbutton');
 
@@ -51,7 +51,7 @@ test('Cycles between validity states.', () => {
   const valid = jest.fn();
 
   render(
-    <Number onChange={() => {}} onInvalid={invalid} onValid={valid} value="1" />
+    <Number onChange={() => {}} onInvalid={invalid} onValid={valid} value={1} />
   );
 
   const input = screen.getByRole('spinbutton');
@@ -65,5 +65,5 @@ test('Cycles between validity states.', () => {
 
   expect(invalid).toHaveBeenCalledTimes(1);
   expect(valid).toHaveBeenCalledTimes(1);
-  expect(valid).toHaveBeenCalledWith();
+  expect(valid).toHaveBeenCalledWith(undefined);
 });

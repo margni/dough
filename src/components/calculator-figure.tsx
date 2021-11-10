@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { Dispatch, useState } from 'react';
 
-import { Number } from './number';
+import { Number, Validity } from './number';
 
 import { round } from '../round';
 
@@ -17,8 +17,19 @@ export const CalculatorFigure = ({
   state,
   step,
   unit,
+}: {
+  label: string;
+  max?: string;
+  min?: string;
+  onDispatch: Dispatch<{ type: string; value: number }>;
+  percentage?: boolean;
+  property: string;
+  readOnly?: boolean;
+  state: any;
+  step?: string;
+  unit?: string;
 }) => {
-  const [error, setError] = useState();
+  const [error, setError] = useState<Validity>();
 
   return (
     <div className={styles.host}>
