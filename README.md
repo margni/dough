@@ -19,7 +19,7 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `npm lint`
+### `npm run lint`
 
 Run ESLint against the project.
 
@@ -30,6 +30,10 @@ Launches the test runner in the interactive watch mode.\
 ### `npm run test:coverage`
 
 Generates coverage report.
+
+### `npm run cypress`
+
+Run E2E tests.
 
 ### `npm run build`
 
