@@ -4,7 +4,14 @@ import userEvent from '@testing-library/user-event';
 import { CalculatorFigure } from './calculator-figure';
 
 test('Has value from state object.', () => {
-  render(<CalculatorFigure label="Test" property="test" state={{ test: 2 }} />);
+  render(
+    <CalculatorFigure
+      label="Test"
+      property="test"
+      state={{ test: 2 }}
+      onDispatch={jest.fn()}
+    />
+  );
 
   expect(screen.getByLabelText('Test')).toHaveDisplayValue('2');
 });
