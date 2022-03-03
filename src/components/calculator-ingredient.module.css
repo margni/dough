@@ -1,0 +1,45 @@
+.host {
+  box-sizing: border-box;
+  color: var(--color-text-secondary);
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-size-regular);
+  margin: 0;
+  padding: var(--pad-small) var(--pad-medium);
+  text-align: right;
+  transition: all var(--animation) ease;
+  width: 50%;
+  height: 4.5rem;
+}
+
+.host input[type='text'] {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px dashed transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-regular);
+  text-align: right;
+  transition: all var(--animation) ease;
+  width: 100%;
+}
+
+.host input[type='text']:focus {
+  background: var(--color-background-alternative);
+  outline: none;
+}
+
+.host input[type='text']:hover,
+.host input[type='text']:focus {
+  border-color: var(--color-text-secondary);
+}
+
+.host > .percent > button {
+  float: left;
+}
+
+@media only screen and (min-width: 512px) {
+  .host {
+    box-sizing: content-box;
+    width: 10rem;
+  }
+}

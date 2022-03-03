@@ -2,13 +2,18 @@
   border: none;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-end;
   margin: 0 0 0.5rem;
+  max-width: 44rem;
   padding: 0;
 }
 
 .host > legend {
+  align-items: baseline;
+  box-sizing: border-box;
+  display: flex;
   font-size: var(--font-size-subheading);
-  padding: 0;
+  justify-content: space-between;
+  padding: 0 var(--pad-small);
   width: 100%;
 }

@@ -1,0 +1,18 @@
+.host {
+  background: transparent;
+  border: 0;
+  border-radius: 0.25rem;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-large);
+  font-weight: 400;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0;
+}
+
+.host:focus,
+.host:hover {
+  background: var(--color-text-secondary);
+  color: var(--color-background);
+  outline: none;
+}

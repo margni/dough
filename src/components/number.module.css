@@ -1,0 +1,31 @@
+.host {
+  appearance: textfield;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px dashed transparent;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-large);
+  padding: var(--pad-very-small);
+  text-align: right;
+  transition: all var(--animation) ease;
+  width: 6rem;
+}
+
+.host::-webkit-inner-spin-button {
+  appearance: none;
+}
+
+.host:focus {
+  background: var(--color-background-alternative);
+  outline: none;
+}
+
+.host:focus,
+.host:hover {
+  border-color: var(--color-text-secondary);
+}
+
+.host:invalid {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}

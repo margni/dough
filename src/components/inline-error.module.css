@@ -1,0 +1,5 @@
+.host {
+  color: var(--color-error);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+}

@@ -7,8 +7,8 @@ test('Has value from state object.', () => {
   render(
     <CalculatorFigure
       label="Test"
-      property="test"
-      state={{ test: 2 }}
+      property="quantity"
+      state={{ quantity: 2 }}
       onDispatch={jest.fn()}
     />
   );
@@ -23,14 +23,14 @@ test('Calls dispatcher on change.', () => {
     <CalculatorFigure
       label="Test"
       onDispatch={fn}
-      property="test"
-      state={{ test: 0 }}
+      property="quantity"
+      state={{ quantity: 0 }}
     />
   );
 
   userEvent.type(screen.getByLabelText('Test'), '1');
 
-  expect(fn).toHaveBeenCalledWith({ type: 'test', value: 1 });
+  expect(fn).toHaveBeenCalledWith({ type: 'quantity', value: 1 });
 });
 
 test('Converts percentage values.', () => {
@@ -41,8 +41,8 @@ test('Converts percentage values.', () => {
       label="Test"
       onDispatch={fn}
       percentage
-      property="test"
-      state={{ test: 0.1 }}
+      property="salt"
+      state={{ salt: 0.1 }}
     />
   );
 
@@ -52,7 +52,7 @@ test('Converts percentage values.', () => {
 
   userEvent.type(input, '{backspace}{backspace}20');
 
-  expect(fn).toHaveBeenLastCalledWith({ type: 'test', value: 0.2 });
+  expect(fn).toHaveBeenLastCalledWith({ type: 'salt', value: 0.2 });
 });
 
 test('Displays validity errors.', async () => {
@@ -62,8 +62,8 @@ test('Displays validity errors.', async () => {
       max="3"
       min="2"
       onDispatch={() => {}}
-      property="test"
-      state={{ test: 2 }}
+      property="quantity"
+      state={{ quantity: 2 }}
       step="1"
     />
   );
@@ -72,17 +72,18 @@ test('Displays validity errors.', async () => {
 
   userEvent.type(input, '{backspace}');
 
-  expect(screen.getByText('Required')).toBeInTheDocument();
+  // TODO Generic error message as provided, can this be mocked?
+  expect(screen.getByText('Constraints not satisfied')).toBeInTheDocument();
 
   userEvent.type(input, '4');
 
-  expect(screen.getByText('Too high, maximum 3')).toBeInTheDocument();
+  expect(screen.getByText('Constraints not satisfied')).toBeInTheDocument();
 
   userEvent.type(input, '{backspace}1');
 
-  expect(screen.getByText('Too low, minimum 2')).toBeInTheDocument();
+  expect(screen.getByText('Constraints not satisfied')).toBeInTheDocument();
 
   userEvent.type(input, '{backspace}2.5');
 
-  expect(screen.getByText('Must be multiple of 1')).toBeInTheDocument();
+  expect(screen.getByText('Constraints not satisfied')).toBeInTheDocument();
 });

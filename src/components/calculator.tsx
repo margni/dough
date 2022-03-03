@@ -1,14 +1,17 @@
 import { useCalculatorReducer } from './calculator.reducer';
 
+import { Button } from './button';
 import { CalculatorFigure } from './calculator-figure';
+import { CalculatorIngredient } from './calculator-ingredient';
 import { Fieldset } from './fieldset';
+import { InlineError } from './inline-error';
+import { Percent } from './percent';
 
 import styles from './calculator.module.css';
 
 // TODO FEATURE Ability to change rounding.
 // TODO FEATURE Ability to specify units.
-// TODO FEATURE Ability to add extra ingredients.
-// TODO FEATURE Ability to specify multiple flour types.
+// TODO FEATURE Ability to add extra ingredients, as in adjuncts, not flours, e.g. seeds.
 // TODO FEATURE Ability to save your recipe.
 // TODO FEATURE Recipe in querystring
 // TODO FEATURE Add presets.
@@ -16,27 +19,28 @@ import styles from './calculator.module.css';
 // TODO FEATURE Ability to expand and collapse sections, or perhaps step through wizard style and be presented with weights at the end.
 export const Calculator = () => {
   const [state, dispatch] = useCalculatorReducer({
-    ballNumber: 2,
-    ballWeight: 250,
+    quantity: 2,
+    weight: 250, //weight/yield
     hydration: 0.7,
     salt: 0.02,
     starter: 0.33,
     starterHydration: 1,
-    flours: {
-      Flour: {
+    flours: [
+      {
+        label: 'Flour',
         percent: 1,
       },
-    },
+    ],
   });
 
   return (
-    <form className={styles.host}>
+    <form autoComplete="off" className={styles.host}>
       <Fieldset legend="Doughballs">
         <CalculatorFigure
-          label="Count"
+          label="Quantity"
           min="1"
           onDispatch={dispatch}
-          property="ballNumber"
+          property="quantity"
           state={state}
           step="1"
         />
@@ -44,7 +48,7 @@ export const Calculator = () => {
           min="10"
           label="Weight"
           onDispatch={dispatch}
-          property="ballWeight"
+          property="weight"
           state={state}
           unit="g"
         />
@@ -93,14 +97,58 @@ export const Calculator = () => {
           unit="%"
         />
       </Fieldset>
-      <Fieldset legend="Your Recipe">
-        {Object.entries(state.flours).map(([label, flour]) => (
+      <Fieldset
+        legend={
+          <>
+            Flours
+            {state.flour !== 1 && (
+              <InlineError role="alert">
+                All flours should add up to 100%, currently{' '}
+                <Percent value={state.flour} />
+              </InlineError>
+            )}
+            <Button
+              onClick={(event) => {
+                event.preventDefault();
+                dispatch({
+                  type: 'add',
+                  ingredient: { label: 'Flour', percent: 0 },
+                });
+              }}
+              title="Add another flour"
+            >
+              +
+            </Button>
+          </>
+        }
+      >
+        {state.flours.map((ingredient) => (
+          <CalculatorIngredient
+            key={ingredient.id}
+            ingredient={ingredient}
+            onDispatch={(ingredient) =>
+              dispatch({
+                type: 'update',
+                ingredient,
+              })
+            }
+            onRemove={() =>
+              dispatch({
+                type: 'remove',
+                ingredient,
+              })
+            }
+          />
+        ))}
+      </Fieldset>
+      <Fieldset legend="Formula">
+        {state.flours.map((flour) => (
           <CalculatorFigure
-            key={label}
-            label={label}
+            key={flour.id}
+            label={flour.label}
             min="1"
-            onDispatch={(action) =>
-              dispatch({ ...action, type: 'flourWeight', property: label })
+            onDispatch={({ value }) =>
+              dispatch({ value, type: 'flourWeight', ingredient: flour })
             }
             property="weight"
             state={flour}
