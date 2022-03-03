@@ -1,8 +1,10 @@
-import { Dispatch, useState } from 'react';
+import { Dispatch, ReactNode, useState } from 'react';
 
-import { Number, Validity } from './number';
+import { round } from '../helpers/round';
 
-import { round } from '../round';
+import { NumericAction, NumericActionType } from './calculator.types';
+import { InlineError } from './inline-error';
+import { Number } from './number';
 
 import styles from './calculator-figure.module.css';
 
@@ -18,18 +20,18 @@ export const CalculatorFigure = ({
   step,
   unit,
 }: {
-  label: string;
+  label: ReactNode;
   max?: string;
   min?: string;
-  onDispatch: Dispatch<{ type: string; value: number }>;
+  onDispatch: Dispatch<NumericAction>;
   percentage?: boolean;
-  property: string;
+  property: NumericActionType;
   readOnly?: boolean;
   state: any;
   step?: string;
   unit?: string;
 }) => {
-  const [error, setError] = useState<Validity>();
+  const [error, setError] = useState<string>();
 
   return (
     <div className={styles.host}>
@@ -46,8 +48,7 @@ export const CalculatorFigure = ({
                 value: round(value * (percentage ? 0.01 : 1), 3),
               })
             }
-            onInvalid={setError}
-            onValid={setError}
+            onValidity={setError}
             readOnly={readOnly}
             step={step}
             value={round(state[property] * (percentage ? 100 : 1), 3)}
@@ -55,14 +56,7 @@ export const CalculatorFigure = ({
           {unit}
         </div>
       </label>
-      {error && (
-        <strong id={`${property}-error`}>
-          {error.valueMissing && <>Required</>}
-          {error.rangeUnderflow && <> Too low, minimum {min}</>}
-          {error.rangeOverflow && <> Too high, maximum {max}</>}
-          {error.stepMismatch && <> Must be multiple of {step}</>}
-        </strong>
-      )}
+      {error && <InlineError id={`${property}-error`}>{error}</InlineError>}
     </div>
   );
 };

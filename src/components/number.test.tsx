@@ -47,23 +47,17 @@ test('Blurs on Enter.', () => {
 });
 
 test('Cycles between validity states.', () => {
-  const invalid = jest.fn();
-  const valid = jest.fn();
+  const validity = jest.fn();
 
-  render(
-    <Number onChange={() => {}} onInvalid={invalid} onValid={valid} value={1} />
-  );
+  render(<Number onChange={() => {}} onValidity={validity} value={1} />);
 
   const input = screen.getByRole('spinbutton');
 
   userEvent.type(input, '{backspace}');
 
-  expect(invalid).toHaveBeenCalledTimes(1);
-  expect(valid).not.toHaveBeenCalled();
+  expect(validity).toHaveBeenLastCalledWith('Constraints not satisfied');
 
   userEvent.type(input, '1');
 
-  expect(invalid).toHaveBeenCalledTimes(1);
-  expect(valid).toHaveBeenCalledTimes(1);
-  expect(valid).toHaveBeenCalledWith(undefined);
+  expect(validity).toHaveBeenLastCalledWith();
 });

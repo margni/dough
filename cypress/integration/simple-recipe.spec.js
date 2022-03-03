@@ -1,7 +1,7 @@
 it('Simple Recipe', () => {
   cy.visit('/');
 
-  cy.findByLabelText('Count').type('{backspace}4');
+  cy.findByLabelText('Quantity').type('{backspace}4');
   cy.findByLabelText('Weightg').type('{leftArrow}{backspace}6');
 
   cy.findByLabelText('Flourg').should('have.value', '552');

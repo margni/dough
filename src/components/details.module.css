@@ -11,7 +11,8 @@
 
 .host > summary {
   border-bottom: 2px dashed transparent;
-  font-size: var(--font-size-regular);
+  cursor: pointer;
+  font-size: var(--font-size-large);
   transition: color var(--animation) ease;
 }
 
@@ -28,4 +29,13 @@
 
 .host[open] > summary {
   margin-bottom: 0.5rem;
+}
+
+.host > ::marker {
+  content: '';
+}
+
+.host h2 {
+  font-size: var(--font-size-large);
+  font-weight: 400;
 }

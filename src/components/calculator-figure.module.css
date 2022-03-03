@@ -11,48 +11,13 @@
   height: 4.5rem;
 }
 
-.host input {
-  background: transparent;
-  border: 0;
-  border-bottom: 2px dashed transparent;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-large);
-  text-align: right;
-  transition: all var(--animation) ease;
-  width: 6rem;
-}
-
 .host label:hover {
   color: var(--color-text-primary);
-}
-
-.host input:invalid {
-  border-color: var(--color-error);
-  color: var(--color-error);
-}
-
-.host input:focus {
-  background: var(--color-background-alternative);
-  outline: none;
 }
 
 .host input:focus,
 .host label:hover input {
   border-color: var(--color-text-secondary);
-}
-
-.host input[type='number'] {
-  -moz-appearance: textfield;
-}
-
-.host input[type='number']::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-
-.host strong {
-  color: var(--color-error);
-  font-weight: 400;
-  font-size: var(--font-size-small);
 }
 
 @media only screen and (min-width: 512px) {

@@ -7,7 +7,7 @@ export const Fieldset = ({
   legend,
 }: {
   children: ReactNode;
-  legend: string;
+  legend: ReactNode;
 }) => (
   <fieldset className={styles.host}>
     <legend>{legend}</legend>

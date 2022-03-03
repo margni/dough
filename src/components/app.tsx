@@ -9,14 +9,25 @@ export const App = () => (
     <header>
       <h1>Dough</h1>
       <img src={logo} alt="" />
-      <h2>Sourdough Pizza Calculator</h2>
+      <h2>Sourdough Calculator</h2>
     </header>
     <div>
       <Details summary="Help?">
-        All figures are editable and changes will adjust other figures
+        All figures are required and editable, changes will adjust other figures
         accordingly.
         <br />
-        Also note that all figures are required.
+        Note if you put wacky numbers in you'll get wacky numbers out, and a
+        yucky dough!
+        <h2>Instructions</h2>
+        <ol>
+          <li>Specify doughball quantity &amp; weight.</li>
+          <li>
+            Specify ingredient ratios such as hydration (% of total flour
+            weight).
+          </li>
+          <li>Specify flour ratios.</li>
+          <li>Make your doughballs.</li>
+        </ol>
       </Details>
       <Calculator />
     </div>

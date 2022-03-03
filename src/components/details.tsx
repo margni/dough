@@ -7,7 +7,7 @@ export const Details = ({
   summary,
 }: {
   children: ReactNode;
-  summary: string;
+  summary: ReactNode;
 }) => (
   <details className={styles.host}>
     <summary>{summary}</summary>

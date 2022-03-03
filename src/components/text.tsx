@@ -1,38 +1,25 @@
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 
-import styles from './number.module.css';
-
-export const Number = ({
+export const Text = ({
   ariaDescribedby,
   ariaLabel,
-  max,
-  min = '0',
   onChange,
   onValidity = () => undefined,
-  readOnly = false,
-  step = 'any',
   value,
 }: {
   ariaDescribedby?: string;
   ariaLabel?: string;
-  max?: string;
-  min?: string;
-  onChange: (number: number) => void;
-  onValidity?: (validity?: string) => void;
-  readOnly?: boolean;
-  step?: string;
-  value: number;
+  onChange: (value: string) => void;
+  onValidity?: (validationMessage?: string) => void;
+  value: string;
 }) => {
   const [localValue, setLocalValue] = useState(value.toString());
   const input = useRef<HTMLInputElement>(null);
   const handleChange: FormEventHandler<HTMLInputElement> = (event) => {
     setLocalValue(event.currentTarget.value);
 
-    if (
-      event.currentTarget.validity.valid &&
-      !isNaN(+event.currentTarget.value)
-    ) {
-      onChange(+event.currentTarget.value);
+    if (event.currentTarget.validity.valid) {
+      onChange(event.currentTarget.value);
       onValidity();
     } else {
       onValidity(event.currentTarget.validationMessage);
@@ -46,18 +33,14 @@ export const Number = ({
       aria-describedby={ariaDescribedby}
       aria-invalid={!input.current?.validity.valid}
       aria-label={ariaLabel}
-      className={styles.host}
-      max={max}
-      min={min}
       onChange={handleChange}
       onKeyDown={(event) =>
         event.nativeEvent.key === 'Enter' && input.current?.blur()
       }
-      readOnly={readOnly}
+      placeholder={ariaLabel}
       ref={input}
       required
-      step={step}
-      type="number"
+      type="text"
       value={localValue}
     />
   );
