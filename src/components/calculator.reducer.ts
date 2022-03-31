@@ -1,61 +1,75 @@
-import { useReducer } from 'react';
+import { useCallback, useReducer } from 'react';
 
 import { round } from '../helpers/round';
-import { Action, Recipe, RecipeIngredient, State } from './calculator.types';
+import {
+  Action,
+  Ingredient,
+  Recipe,
+  RecipeIngredient,
+  State,
+} from './calculator.types';
 
 let _id = 0;
 
+// TODO Could this be simpler, perhaps without a reducer?
 const calculate = ({
   weight,
   quantity,
   hydration,
-  salt,
   starter,
   starterHydration,
-  flours,
+  ingredients,
 }: Recipe): State => {
   const water = hydration - (starter - starter / (1 + starterHydration));
   // Note User is warned when flour does not equal 1, however weights still add
   // up, if a bit weird.
   const flour = round(
-    flours.reduce((acc, flour) => acc + flour.percent, 0),
+    ingredients
+      .filter(({ type }) => type === 'flour')
+      .reduce((acc, { percent }) => acc + percent, 0),
     3
   );
-  const total = flour + water + salt + starter;
+  const adjunct = round(
+    ingredients
+      .filter(({ type }) => type === 'adjunct')
+      .reduce((acc, { percent }) => acc + percent, 0),
+    3
+  );
+  const total = flour + water + adjunct + starter;
 
-  const flourWeight = (weight * quantity) / total;
+  const unitWeight = (weight * quantity) / total;
 
   return {
     quantity,
     weight,
     flour,
     hydration,
-    salt,
     starter,
     starterHydration,
+    adjunct,
     total,
     water,
-    saltWeight: round(flourWeight * salt, 1),
-    starterWeight: round(flourWeight * starter),
-    waterWeight: round(flourWeight * water),
-    flours: flours.map(({ label, percent, id }) => ({
+    starterWeight: round(starter * unitWeight),
+    waterWeight: round(water * unitWeight),
+    ingredients: ingredients.map(({ type, label, percent, id }) => ({
       id: id || _id++,
+      type,
       label,
       percent,
-      weight: round(flourWeight * percent),
+      weight: round(percent * unitWeight),
     })),
   };
 };
 
 const calculateWeight = (
-  flourWeight: number,
+  weight: number,
   { quantity, total }: { quantity: number; total: number }
-) => round((flourWeight * total) / quantity);
+) => round((weight * total) / quantity);
 
-const calculateBall = (state: State, flourWeight: number) =>
+const calculateBall = (state: State, weight: number) =>
   calculate({
     ...state,
-    weight: calculateWeight(flourWeight, state),
+    weight: calculateWeight(weight, state),
   });
 
 const calculatorReducer = (
@@ -66,41 +80,20 @@ const calculatorReducer = (
     case 'quantity':
     case 'weight':
     case 'hydration':
-    case 'salt':
     case 'starter':
     case 'starterHydration':
       return calculate({ ...state, [type]: value });
 
-    // TODO Is it possible to simplify and standardize weight reverse engineering?
-    case 'flourWeight':
-      /* istanbul ignore next */
-      if (!ingredient) {
-        throw new Error(`'flourWeight' without 'ingredient'.`);
-      }
-
-      return {
-        ...calculateBall(state, +value / ingredient.percent),
-        flours: state.flours.map((flour) =>
-          flour === ingredient ? { ...flour, weight: +value } : flour
-        ),
-      };
-
     case 'waterWeight':
       return {
-        ...calculateBall(state, +value / state.water),
-        waterWeight: +value,
-      };
-
-    case 'saltWeight':
-      return {
-        ...calculateBall(state, +value / state.salt),
-        saltWeight: +value,
+        ...calculateBall(state, value / state.water),
+        waterWeight: value,
       };
 
     case 'starterWeight':
       return {
-        ...calculateBall(state, +value / state.starter),
-        starterWeight: +value,
+        ...calculateBall(state, value / state.starter),
+        starterWeight: value,
       };
 
     case 'add':
@@ -119,39 +112,80 @@ const calculatorReducer = (
   }
 };
 
+// Just moves flours to the start
+const sortIngredients = (a: RecipeIngredient, b: RecipeIngredient) =>
+  a.type === 'flour' ? (b.type === 'flour' ? 0 : -1) : 1;
+
 const ingredientActions = {
-  add: (state: State, { label }: RecipeIngredient) =>
-    // TODO Improve this such as
-    // 100% if no flours
-    // Half of last value (if at least 10%)
-    // Last resort set to 0%
+  // TODO Improve this such as
+  // 100% if no flours
+  // Half of last value (if at least 10%)
+  // Last resort set to 0%
+  add: (state: State, newIngredient: Ingredient) =>
     calculate({
       ...state,
-      flours: [...state.flours, { label, percent: 0.1 }],
+      ingredients: [...state.ingredients, newIngredient].sort(sortIngredients),
     }),
-  remove: (state: State, ingredient: RecipeIngredient) => {
-    const flours = state.flours
-      .filter((flour) => flour !== ingredient)
-      .map((flour) => ({ ...flour }));
+  remove: (state: State, removedIngredient: Ingredient) =>
+    calculate({
+      ...state,
+      ingredients: state.ingredients.filter(
+        (ingredient) => ingredient !== removedIngredient
+      ),
+    }),
+  update: (state: State, newIngredient: Ingredient) => {
+    const oldIngredient = state.ingredients.find(
+      ({ id }) => id === newIngredient.id
+    );
 
-    if (flours.length) {
-      const remainder = 1 - state.flour + ingredient.percent;
-      flours[flours.length - 1].percent += remainder > 0 ? remainder : 0;
+    /* istanbul ignore next */
+    if (!oldIngredient) {
+      throw new Error('Update non existant ingredient!');
+    }
+
+    if (newIngredient.weight && oldIngredient.weight !== newIngredient.weight) {
+      const intermediateState = {
+        ...calculateBall(state, newIngredient.weight / newIngredient.percent),
+      };
+
+      return {
+        ...intermediateState,
+        ingredients: intermediateState.ingredients.map((ingredient) =>
+          ingredient.id === newIngredient.id ? newIngredient : ingredient
+        ),
+      };
     }
 
     return calculate({
       ...state,
-      flours,
+      ingredients: state.ingredients.map((ingredient) =>
+        newIngredient.id === ingredient.id ? newIngredient : ingredient
+      ),
     });
   },
-  update: (state: State, ingredient: RecipeIngredient) =>
-    calculate({
-      ...state,
-      flours: state.flours.map((flour) =>
-        flour.id === ingredient.id ? ingredient : flour
-      ),
-    }),
 };
 
-export const useCalculatorReducer = (defaultRecipe: Recipe) =>
-  useReducer(calculatorReducer, defaultRecipe, (state) => calculate(state));
+export const useCalculator = (defaultRecipe: Recipe) => {
+  const [state, dispatch] = useReducer(
+    calculatorReducer,
+    defaultRecipe,
+    (state) => calculate(state)
+  );
+
+  return {
+    state,
+    dispatch,
+    add: useCallback(
+      (ingredient: Ingredient) => dispatch({ type: 'add', ingredient }),
+      []
+    ),
+    update: useCallback(
+      (ingredient: Ingredient) => dispatch({ type: 'update', ingredient }),
+      []
+    ),
+    remove: useCallback(
+      (ingredient: Ingredient) => dispatch({ type: 'remove', ingredient }),
+      []
+    ),
+  };
+};

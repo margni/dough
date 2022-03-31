@@ -1,41 +1,53 @@
 /* istanbul ignore file */
-// TODO id is not optional it shouldn't be included at all, this is just to simplify typing
-export type RecipeIngredient = { label: string; percent: number; id?: number };
-export type Ingredient = RecipeIngredient & { id: number; weight: number };
+// TODO id and weight are not optional, they shouldn't be included at all, this
+// is just to simplify typing.
+type Flour = {
+  type: 'flour';
+  label: string;
+  percent: number;
+  id?: number;
+  weight?: number;
+};
+type Adjunct = {
+  type: 'adjunct';
+  label: string;
+  percent: number;
+  id?: number;
+  weight?: number;
+};
 
-export type RecipeFlours = RecipeIngredient[];
-export type Flours = Ingredient[];
+export type RecipeIngredient = Flour | Adjunct;
+export type Ingredient = RecipeIngredient & { id?: number; weight?: number };
+
+export type RecipeIngredients = RecipeIngredient[];
+export type Ingredients = Ingredient[];
 
 export type Recipe = {
   quantity: number;
   weight: number;
   hydration: number;
-  salt: number;
   starter: number;
   starterHydration: number;
-  flours: RecipeFlours;
+  ingredients: RecipeIngredients;
 };
 
-export type State = Omit<Recipe, 'flours'> & {
+export type State = Omit<Recipe, 'ingredients'> & {
   flour: number;
-  total: number;
   water: number;
-  saltWeight: number;
+  adjunct: number;
+  total: number;
   starterWeight: number;
   waterWeight: number;
-  flours: Flours;
+  ingredients: Ingredients;
 };
 
 export type NumericActionType =
   | 'weight'
   | 'quantity'
-  | 'weight'
   | 'hydration'
-  | 'salt'
   | 'starter'
   | 'starterHydration'
   | 'waterWeight'
-  | 'saltWeight'
   | 'starterWeight';
 
 export type NumericAction = {
@@ -45,12 +57,9 @@ export type NumericAction = {
 };
 
 export type IngredientAction = {
-  ingredient: RecipeIngredient;
+  ingredient: Ingredient;
   type: 'add' | 'remove' | 'update';
   value?: never;
 };
 
-export type Action =
-  | NumericAction
-  | IngredientAction
-  | { type: 'flourWeight'; value: number; ingredient: RecipeIngredient };
+export type Action = NumericAction | IngredientAction;

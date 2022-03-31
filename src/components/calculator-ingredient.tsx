@@ -12,12 +12,16 @@ import styles from './calculator-ingredient.module.css';
 
 export const CalculatorIngredient = ({
   ingredient,
-  onDispatch,
+  min = '1',
+  onChange,
   onRemove,
+  step = '0.5',
 }: {
   ingredient: Ingredient;
-  onDispatch: (ingredient: Ingredient) => void;
-  onRemove: () => void;
+  min?: string;
+  onChange: (ingredient: Ingredient) => void;
+  onRemove: (ingredient: Ingredient) => void;
+  step?: string;
 }) => {
   const [labelError, setLabelError] = useState<string>();
   const [percentError, setPercentError] = useState<string>();
@@ -28,7 +32,7 @@ export const CalculatorIngredient = ({
         ariaDescribedby={`${ingredient.id}-label-error`}
         ariaLabel="Label"
         onChange={(value) =>
-          onDispatch({
+          onChange({
             ...ingredient,
             label: value,
           })
@@ -46,22 +50,22 @@ export const CalculatorIngredient = ({
           ariaDescribedby={`${ingredient.id}-percent-error`}
           ariaLabel={`${ingredient.label} Percent`}
           max="100"
-          min="1"
+          min={min}
           onChange={(value) =>
-            onDispatch({
+            onChange({
               ...ingredient,
               percent: round(value * 0.01, 3),
             })
           }
           onValidity={setPercentError}
-          step="0.5"
+          step={step}
           value={round(ingredient.percent * 100, 3)}
         />
         <span aria-hidden="true">%</span>
         <Button
           onClick={(event) => {
             event.preventDefault();
-            onRemove();
+            onRemove(ingredient);
           }}
           title={`Remove ${ingredient.label}`}
         >

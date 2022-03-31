@@ -13,20 +13,37 @@ export const App = () => (
     </header>
     <div>
       <Details summary="Help?">
-        All figures are required and editable, changes will adjust other figures
-        accordingly.
-        <br />
-        Note if you put wacky numbers in you'll get wacky numbers out, and a
-        yucky dough!
+        <ul>
+          <li>
+            All figures are required and editable, changes will adjust other
+            figures accordingly.
+          </li>
+          <li>
+            Weights are rounded for simplicity, so things might be out a couple
+            of g.
+          </li>
+          <li>
+            If you put wacky numbers in you'll get wacky numbers out, and a
+            probably not a very nice dough either!
+          </li>
+          <li>
+            The calculator assumes you are using your starter like a levain or
+            preferment.
+          </li>
+          <li>Water is total hydration minus water in starter.</li>
+        </ul>
         <h2>Instructions</h2>
         <ol>
           <li>Specify doughball quantity &amp; weight.</li>
+          <li>Specify flour baker's percentages.</li>
           <li>
-            Specify ingredient ratios such as hydration (% of total flour
-            weight).
+            Specify non-flour baker's percentages such as hydration (% of total
+            flour weight).
           </li>
-          <li>Specify flour ratios.</li>
-          <li>Make your doughballs.</li>
+          <li>
+            Make your doughballs, the recipe is up you you, this can only give
+            you your formula.
+          </li>
         </ol>
       </Details>
       <Calculator />

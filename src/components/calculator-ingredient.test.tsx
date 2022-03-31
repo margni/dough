@@ -6,8 +6,14 @@ import { CalculatorIngredient } from './calculator-ingredient';
 test('Shows error on invalid', () => {
   render(
     <CalculatorIngredient
-      ingredient={{ id: 1, label: 'Test', percent: 1, weight: 1 }}
-      onDispatch={jest.fn()}
+      ingredient={{
+        type: 'flour',
+        id: 1,
+        label: 'Test',
+        percent: 1,
+        weight: 1,
+      }}
+      onChange={jest.fn()}
       onRemove={jest.fn()}
     />
   );
