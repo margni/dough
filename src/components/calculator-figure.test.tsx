@@ -41,8 +41,8 @@ test('Converts percentage values.', () => {
       label="Test"
       onDispatch={fn}
       percentage
-      property="salt"
-      state={{ salt: 0.1 }}
+      property="starter"
+      state={{ starter: 0.1 }}
     />
   );
 
@@ -52,7 +52,7 @@ test('Converts percentage values.', () => {
 
   userEvent.type(input, '{backspace}{backspace}20');
 
-  expect(fn).toHaveBeenLastCalledWith({ type: 'salt', value: 0.2 });
+  expect(fn).toHaveBeenLastCalledWith({ type: 'starter', value: 0.2 });
 });
 
 test('Displays validity errors.', async () => {

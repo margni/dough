@@ -8,10 +8,10 @@ const change = (labelText, value, input = screen.getByLabelText(labelText)) => {
   userEvent.type(input, value);
 };
 
-const configure = () => {
+const configure = async () => {
   change('Quantity', '1');
   change('Hydration%', '50');
-  change('Salt%', '10');
+  change('Salt Percent', '10');
   change('Starter%', '20');
   change('Starter Hydration%', '100');
 };
@@ -22,7 +22,7 @@ test('Initial weights are correct.', () => {
   expect(screen.getByLabelText('Flourg')).toHaveDisplayValue('265');
   expect(screen.getByLabelText('Waterg')).toHaveDisplayValue('142');
   expect(screen.getByLabelText('Starterg')).toHaveDisplayValue('88');
-  expect(screen.getByLabelText('Saltg')).toHaveDisplayValue('5.3');
+  expect(screen.getByLabelText('Saltg')).toHaveDisplayValue('5');
 });
 
 test('Changing ball weight changes ingredient weights.', () => {
@@ -67,9 +67,9 @@ test('Adding and removing flours.', () => {
 
   configure();
 
-  userEvent.type(screen.getByRole('textbox', { name: 'Label' }), ' One');
+  userEvent.type(screen.getAllByRole('textbox', { name: 'Label' })[0], ' One');
 
-  userEvent.click(screen.getByRole('button', { name: 'Add another flour' }));
+  userEvent.click(screen.getByRole('button', { name: 'Add a flour' }));
 
   expect(screen.getByRole('alert')).toHaveTextContent(
     'All flours should add up to 100%, currently 110%'
@@ -89,9 +89,25 @@ test('Adding and removing flours.', () => {
 
   userEvent.click(screen.getByRole('button', { name: 'Remove Flour' }));
 
-  expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+  expect(screen.getByRole('alert')).toHaveTextContent(
+    'All flours should add up to 100%, currently 90%'
+  );
 
   userEvent.click(screen.getByRole('button', { name: 'Remove Flour One' }));
 
   expect(screen.getByRole('alert')).toBeInTheDocument();
+});
+
+test('Adding and removing adjuncts.', () => {
+  render(<Calculator />);
+
+  configure();
+
+  userEvent.click(screen.getByRole('button', { name: 'Add an adjunct' }));
+
+  expect(screen.getByLabelText('Adjunctg')).toHaveDisplayValue('14');
+
+  userEvent.click(screen.getByRole('button', { name: 'Remove Adjunct' }));
+
+  expect(screen.queryByLabelText('Adjunctg')).not.toBeInTheDocument();
 });
