@@ -1,6 +1,6 @@
 /* istanbul ignore file */
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
@@ -9,11 +9,10 @@ import { App } from './components/app';
 
 import './index.css';
 
-ReactDOM.render(
-  <React.StrictMode>
+createRoot(document.getElementById('root') || document.body).render(
+  <StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change

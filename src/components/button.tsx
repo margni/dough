@@ -11,7 +11,12 @@ export const Button = ({
   onClick: MouseEventHandler<HTMLButtonElement>;
   title?: string;
 }) => (
-  <button className={styles.host} onClick={onClick} title={title}>
+  <button
+    aria-label={title}
+    className={styles.host}
+    onClick={onClick}
+    title={title}
+  >
     {children}
   </button>
 );
