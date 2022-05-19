@@ -3,17 +3,21 @@ import userEvent from '@testing-library/user-event';
 
 import { Calculator } from './calculator';
 
-const change = (labelText, value, input = screen.getByLabelText(labelText)) => {
-  userEvent.clear(input);
-  userEvent.type(input, value);
+const change = async (
+  labelText,
+  value,
+  input = screen.getByLabelText(labelText)
+) => {
+  await userEvent.clear(input);
+  await userEvent.type(input, value);
 };
 
 const configure = async () => {
-  change('Quantity', '1');
-  change('Hydration%', '50');
-  change('Salt Percent', '10');
-  change('Starter%', '20');
-  change('Starter Hydration%', '100');
+  await change('Quantity', '1');
+  await change('Hydration%', '50');
+  await change('Salt Percent', '10');
+  await change('Starter%', '20');
+  await change('Starter Hydration%', '100');
 };
 
 test('Initial weights are correct.', () => {
@@ -25,12 +29,12 @@ test('Initial weights are correct.', () => {
   expect(screen.getByLabelText('Saltg')).toHaveDisplayValue('5');
 });
 
-test('Changing ball weight changes ingredient weights.', () => {
+test('Changing ball weight changes ingredient weights.', async () => {
   render(<Calculator />);
 
-  configure();
+  await configure();
 
-  change('Weightg', '850');
+  await change('Weightg', '850');
 
   expect(screen.getByLabelText('Flourg')).toHaveDisplayValue('500');
   expect(screen.getByLabelText('Waterg')).toHaveDisplayValue('200');
@@ -38,76 +42,84 @@ test('Changing ball weight changes ingredient weights.', () => {
   expect(screen.getByLabelText('Saltg')).toHaveDisplayValue('50');
 });
 
-test('Changing ingredient weights changes ball weight.', () => {
+test('Changing ingredient weights changes ball weight.', async () => {
   render(<Calculator />);
 
-  configure();
+  await configure();
 
   const weight = screen.getByLabelText('Weightg');
 
-  change('Flourg', '100');
+  await change('Flourg', '100');
 
   expect(weight).toHaveDisplayValue('170');
 
-  change('Waterg', '100');
+  await change('Waterg', '100');
 
   expect(weight).toHaveDisplayValue('425');
 
-  change('Starterg', '10');
+  await change('Starterg', '10');
 
   expect(weight).toHaveDisplayValue('85');
 
-  change('Saltg', '10');
+  await change('Saltg', '10');
 
   expect(weight).toHaveDisplayValue('170');
 });
 
-test('Adding and removing flours.', () => {
+test('Adding and removing flours.', async () => {
   render(<Calculator />);
 
-  configure();
+  await configure();
 
-  userEvent.type(screen.getAllByRole('textbox', { name: 'Label' })[0], ' One');
+  await userEvent.type(
+    screen.getAllByRole('textbox', { name: 'Label' })[0],
+    ' One'
+  );
 
-  userEvent.click(screen.getByRole('button', { name: 'Add a flour' }));
+  await userEvent.click(screen.getByRole('button', { name: 'Add a flour' }));
 
   expect(screen.getByRole('alert')).toHaveTextContent(
     'All flours should add up to 100%, currently 110%'
   );
 
   const percent = screen.getByRole('spinbutton', { name: 'Flour One Percent' });
-  userEvent.clear(percent);
-  userEvent.type(percent, '90');
+  await userEvent.clear(percent);
+  await userEvent.type(percent, '90');
 
   expect(screen.queryByRole('alert')).not.toBeInTheDocument();
 
   expect(screen.getByLabelText('Weightg')).toHaveDisplayValue('250');
 
-  userEvent.type(screen.getByRole('spinbutton', { name: 'Flour One g' }), '0');
+  await userEvent.type(
+    screen.getByRole('spinbutton', { name: 'Flour One g' }),
+    '0'
+  );
 
   expect(screen.getByLabelText('Weightg')).toHaveDisplayValue('2493');
 
-  userEvent.click(screen.getByRole('button', { name: 'Remove Flour' }));
+  await userEvent.click(screen.getByRole('button', { name: 'Remove Flour' }));
 
   expect(screen.getByRole('alert')).toHaveTextContent(
     'All flours should add up to 100%, currently 90%'
   );
 
-  userEvent.click(screen.getByRole('button', { name: 'Remove Flour One' }));
+  await userEvent.click(
+    screen.getByRole('button', { name: 'Remove Flour One' })
+  );
 
   expect(screen.getByRole('alert')).toBeInTheDocument();
 });
 
-test('Adding and removing adjuncts.', () => {
+test('Adding and removing adjuncts.', async () => {
   render(<Calculator />);
 
-  configure();
+  await configure();
 
-  userEvent.click(screen.getByRole('button', { name: 'Add an adjunct' }));
+  await userEvent.click(screen.getByRole('button', { name: 'Add an adjunct' }));
 
   expect(screen.getByLabelText('Adjunctg')).toHaveDisplayValue('14');
 
-  userEvent.click(screen.getByRole('button', { name: 'Remove Adjunct' }));
+  await userEvent.click(screen.getByRole('button', { name: 'Remove Adjunct' }));
 
   expect(screen.queryByLabelText('Adjunctg')).not.toBeInTheDocument();
 });
