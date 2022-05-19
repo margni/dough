@@ -16,7 +16,7 @@ test('Has value from state object.', () => {
   expect(screen.getByLabelText('Test')).toHaveDisplayValue('2');
 });
 
-test('Calls dispatcher on change.', () => {
+test('Calls dispatcher on change.', async () => {
   const fn = jest.fn();
 
   render(
@@ -28,12 +28,12 @@ test('Calls dispatcher on change.', () => {
     />
   );
 
-  userEvent.type(screen.getByLabelText('Test'), '1');
+  await userEvent.type(screen.getByLabelText('Test'), '1');
 
   expect(fn).toHaveBeenCalledWith({ type: 'quantity', value: 1 });
 });
 
-test('Converts percentage values.', () => {
+test('Converts percentage values.', async () => {
   const fn = jest.fn();
 
   render(
@@ -50,7 +50,7 @@ test('Converts percentage values.', () => {
 
   expect(input).toHaveDisplayValue('10');
 
-  userEvent.type(input, '{backspace}{backspace}20');
+  await userEvent.type(input, '{backspace}{backspace}20');
 
   expect(fn).toHaveBeenLastCalledWith({ type: 'starter', value: 0.2 });
 });
@@ -70,20 +70,20 @@ test('Displays validity errors.', async () => {
 
   const input = screen.getByLabelText('Test');
 
-  userEvent.type(input, '{backspace}');
+  await userEvent.type(input, '{backspace}');
 
   // TODO Generic error message as provided, can this be mocked?
   expect(screen.getByText('Constraints not satisfied')).toBeInTheDocument();
 
-  userEvent.type(input, '4');
+  await userEvent.type(input, '4');
 
   expect(screen.getByText('Constraints not satisfied')).toBeInTheDocument();
 
-  userEvent.type(input, '{backspace}1');
+  await userEvent.type(input, '{backspace}1');
 
   expect(screen.getByText('Constraints not satisfied')).toBeInTheDocument();
 
-  userEvent.type(input, '{backspace}2.5');
+  await userEvent.type(input, '{backspace}2.5');
 
   expect(screen.getByText('Constraints not satisfied')).toBeInTheDocument();
 });
