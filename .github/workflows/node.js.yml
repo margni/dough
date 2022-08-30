@@ -15,11 +15,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [17.x]
-
+        node-version: [18.x]
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -60,13 +58,16 @@ jobs:
   end-to-end:
     needs: preview
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
     env:
       NODE_ENV: development
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         env:
           CYPRESS_BASE_URL: ${{ needs.preview.outputs.details_url }}
       - name: Upload Screenshots
