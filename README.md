@@ -21,7 +21,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### `npm run lint`
 
-Run ESLint against the project.
+Run ESLint & Stylelint against the project.
 
 ### `npm test`
 
