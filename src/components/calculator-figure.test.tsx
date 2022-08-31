@@ -73,17 +73,19 @@ test('Displays validity errors.', async () => {
   await userEvent.type(input, '{backspace}');
 
   // TODO Generic error message as provided, can this be mocked?
-  expect(screen.getByText('Constraints not satisfied')).toBeInTheDocument();
+  const VALIDITY_ERROR = 'Constraints not satisfied';
+
+  expect(screen.getByText(VALIDITY_ERROR)).toBeInTheDocument();
 
   await userEvent.type(input, '4');
 
-  expect(screen.getByText('Constraints not satisfied')).toBeInTheDocument();
+  expect(screen.getByText(VALIDITY_ERROR)).toBeInTheDocument();
 
   await userEvent.type(input, '{backspace}1');
 
-  expect(screen.getByText('Constraints not satisfied')).toBeInTheDocument();
+  expect(screen.getByText(VALIDITY_ERROR)).toBeInTheDocument();
 
   await userEvent.type(input, '{backspace}2.5');
 
-  expect(screen.getByText('Constraints not satisfied')).toBeInTheDocument();
+  expect(screen.getByText(VALIDITY_ERROR)).toBeInTheDocument();
 });

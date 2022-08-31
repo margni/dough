@@ -36,7 +36,7 @@
     "build": "react-scripts build",
     "cypress": "cypress run",
     "cypress:open": "cypress open",
-    "lint": "eslint src --fix && stylelint src --fix",
+    "lint": "eslint src --fix && stylelint \"src/**/*.css\" --fix",
     "prepare": "is-ci || husky install",
     "pre-commit": "lint-staged",
     "start": "react-scripts start",
@@ -80,6 +80,7 @@
   },
   "lint-staged": {
     "*.css": "stylelint --fix",
+    "*.{ts,tsx,js,jsx}": "eslint --fix",
     "*.{ts,tsx,js,css,md}": "prettier --write"
   }
 }
