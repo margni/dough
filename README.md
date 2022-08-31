@@ -14,27 +14,37 @@ _© Margni Ltd. 2020_
 
 In the project directory, you can run:
 
-### `npm start`
+### Start
+
+`npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `npm run lint`
+### Lint
+
+`npm run lint`
 
 Run ESLint & Stylelint against the project.
 
-### `npm test`
+### Test
 
-Launches the test runner in the interactive watch mode.\
+`npm test`
 
-### `npm run test:coverage`
+Launches the test runner in the interactive watch mode.
 
-Generates coverage report.
+### Generate Coverage Report
 
-### `npm run cypress`
+`npm run test:coverage`
 
-Run E2E tests.
+### Run E2E tests
 
-### `npm run build`
+`npm run cypress` or `npm run cypress:open`
+
+_(Application must be running on http://localhost:3000)_
+
+### Build
+
+`npm run build`
 
 Builds the app for production to the `build` folder.
