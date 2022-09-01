@@ -16,6 +16,16 @@
   --pad-large: 1rem;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #20201e;
+    --color-background-alternative: #181613;
+    --color-error: #f43;
+    --color-text-primary: #ffe;
+    --color-text-secondary: #ceceb4;
+  }
+}
+
 html {
   cursor: default;
   font-size: 14px;
