@@ -4,9 +4,9 @@ import userEvent from '@testing-library/user-event';
 import { Calculator } from './calculator';
 
 const change = async (
-  labelText,
-  value,
-  input = screen.getByLabelText(labelText)
+  labelText: string,
+  value: string,
+  input = screen.getByLabelText(labelText),
 ) => {
   await userEvent.clear(input);
   await userEvent.type(input, value);
@@ -73,13 +73,13 @@ test('Adding and removing flours.', async () => {
 
   await userEvent.type(
     screen.getAllByRole('textbox', { name: 'Label' })[0],
-    ' One'
+    ' One',
   );
 
   await userEvent.click(screen.getByRole('button', { name: 'Add a flour' }));
 
   expect(screen.getByRole('alert')).toHaveTextContent(
-    'All flours should add up to 100%, currently 110%'
+    'All flours should add up to 100%, currently 110%',
   );
 
   const percent = screen.getByRole('spinbutton', { name: 'Flour One Percent' });
@@ -92,7 +92,7 @@ test('Adding and removing flours.', async () => {
 
   await userEvent.type(
     screen.getByRole('spinbutton', { name: 'Flour One g' }),
-    '0'
+    '0',
   );
 
   expect(screen.getByLabelText('Weightg')).toHaveDisplayValue('2493');
@@ -100,11 +100,11 @@ test('Adding and removing flours.', async () => {
   await userEvent.click(screen.getByRole('button', { name: 'Remove Flour' }));
 
   expect(screen.getByRole('alert')).toHaveTextContent(
-    'All flours should add up to 100%, currently 90%'
+    'All flours should add up to 100%, currently 90%',
   );
 
   await userEvent.click(
-    screen.getByRole('button', { name: 'Remove Flour One' })
+    screen.getByRole('button', { name: 'Remove Flour One' }),
   );
 
   expect(screen.getByRole('alert')).toBeInTheDocument();
