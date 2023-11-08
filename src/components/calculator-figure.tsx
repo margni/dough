@@ -2,7 +2,7 @@ import { Dispatch, ReactNode, useState } from 'react';
 
 import { round } from '../helpers/round';
 
-import { NumericAction, NumericActionType } from './calculator.types';
+import { NumericAction, NumericActionType, State } from './calculator.types';
 import { InlineError } from './inline-error';
 import { Number } from './number';
 
@@ -27,7 +27,7 @@ export const CalculatorFigure = ({
   percentage?: boolean;
   property: NumericActionType;
   readOnly?: boolean;
-  state: any;
+  state: Partial<State>;
   step?: string;
   unit?: string;
 }) => {
@@ -51,7 +51,7 @@ export const CalculatorFigure = ({
             onValidity={setError}
             readOnly={readOnly}
             step={step}
-            value={round(state[property] * (percentage ? 100 : 1), 3)}
+            value={round((state[property] || 0) * (percentage ? 100 : 1), 3)}
           />
           {unit}
         </div>
