@@ -1,0 +1,67 @@
+name: CICD Workflow
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+env:
+  NODE_ENV: production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+      - run: npm ci
+      - run: NODE_ENV=test npm run test:coverage
+      - uses: codecov/codecov-action@v3
+      - run: npm run build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: build
+
+  preview:
+    needs: build
+    if: github.event.pull_request.base.ref == 'master'
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+
+  end-to-end:
+    needs: preview
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: development
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+      - uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_BASE_URL: ${{ needs.preview.outputs.details_url }}
+      - name: Upload Screenshots
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - if: failure()
+        name: Upload Videos
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-videos
+          path: cypress/videos
+
+  production:
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    with:
+      channelId: live
