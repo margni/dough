@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { expect, test, vi } from 'vitest';
 
 import { CalculatorFigure } from './calculator-figure';
 
@@ -9,15 +10,15 @@ test('Has value from state object.', () => {
       label="Test"
       property="quantity"
       state={{ quantity: 2 }}
-      onDispatch={jest.fn()}
-    />
+      onDispatch={vi.fn()}
+    />,
   );
 
   expect(screen.getByLabelText('Test')).toHaveDisplayValue('2');
 });
 
 test('Calls dispatcher on change.', async () => {
-  const fn = jest.fn();
+  const fn = vi.fn();
 
   render(
     <CalculatorFigure
@@ -25,7 +26,7 @@ test('Calls dispatcher on change.', async () => {
       onDispatch={fn}
       property="quantity"
       state={{ quantity: 0 }}
-    />
+    />,
   );
 
   await userEvent.type(screen.getByLabelText('Test'), '1');
@@ -34,7 +35,7 @@ test('Calls dispatcher on change.', async () => {
 });
 
 test('Converts percentage values.', async () => {
-  const fn = jest.fn();
+  const fn = vi.fn();
 
   render(
     <CalculatorFigure
@@ -43,7 +44,7 @@ test('Converts percentage values.', async () => {
       percentage
       property="starter"
       state={{ starter: 0.1 }}
-    />
+    />,
   );
 
   const input = screen.getByLabelText('Test');
@@ -65,14 +66,13 @@ test('Displays validity errors.', async () => {
       property="quantity"
       state={{ quantity: 2 }}
       step="1"
-    />
+    />,
   );
 
   const input = screen.getByLabelText('Test');
 
   await userEvent.type(input, '{backspace}');
 
-  // TODO Generic error message as provided, can this be mocked?
   const VALIDITY_ERROR = 'Constraints not satisfied';
 
   expect(screen.getByText(VALIDITY_ERROR)).toBeInTheDocument();

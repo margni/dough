@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { expect, test, vi } from 'vitest';
 
 import { CalculatorIngredient } from './calculator-ingredient';
 
@@ -13,8 +14,8 @@ test('Shows error on invalid', async () => {
         percent: 1,
         weight: 1,
       }}
-      onChange={jest.fn()}
-      onRemove={jest.fn()}
+      onChange={vi.fn()}
+      onRemove={vi.fn()}
     />,
   );
 

@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { expect, test, vi } from 'vitest';
 
 import { Number } from './number';
 
@@ -10,7 +11,7 @@ test('Has value.', () => {
 });
 
 test("Doesn't call onChange on invalid change.", async () => {
-  const fn = jest.fn();
+  const fn = vi.fn();
 
   render(<Number onChange={fn} value={0} step=".2" />);
 
@@ -23,7 +24,7 @@ test("Doesn't call onChange on invalid change.", async () => {
 });
 
 test('Calls onChange on valid change.', async () => {
-  const fn = jest.fn();
+  const fn = vi.fn();
 
   render(<Number onChange={fn} value={0} />);
 
@@ -47,7 +48,7 @@ test('Blurs on Enter.', async () => {
 });
 
 test('Cycles between validity states.', async () => {
-  const validity = jest.fn();
+  const validity = vi.fn();
 
   render(<Number onChange={() => {}} onValidity={validity} value={1} />);
 
