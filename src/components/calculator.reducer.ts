@@ -99,14 +99,14 @@ const calculatorReducer = (
     case 'add':
     case 'remove':
     case 'update':
-      /* istanbul ignore next */
+      /* v8 ignore next 3 */
       if (!ingredient) {
         throw new Error(`Ingredient action without 'ingredient'.`);
       }
 
       return ingredientActions[type](state, ingredient);
 
-    /* istanbul ignore next */
+    /* v8 ignore next 2 */
     default:
       throw new Error();
   }
@@ -138,7 +138,7 @@ const ingredientActions = {
       ({ id }) => id === newIngredient.id
     );
 
-    /* istanbul ignore next */
+    /* v8 ignore next 3 */
     if (!oldIngredient) {
       throw new Error('Update non existant ingredient!');
     }
