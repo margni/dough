@@ -1,10 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { expect, test, vi } from 'vitest';
 
 import { Text } from './text';
 
 test("Doesn't call onChange on invalid change.", async () => {
-  const fn = jest.fn();
+  const fn = vi.fn();
 
   render(<Text onChange={fn} value="T" />);
 
@@ -31,9 +32,9 @@ test('Blurs on Enter.', async () => {
 });
 
 test('Cycles between validity states.', async () => {
-  const validity = jest.fn();
+  const validity = vi.fn();
 
-  render(<Text onChange={jest.fn()} onValidity={validity} value="T" />);
+  render(<Text onChange={vi.fn()} onValidity={validity} value="T" />);
 
   const input = screen.getByRole('textbox');
 

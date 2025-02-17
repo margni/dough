@@ -5,8 +5,8 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
-    "plugin:sonarjs/recommended",
-    "plugin:testing-library/react",
+    "plugin:sonarjs/recommended-legacy",
+    // "plugin:testing-library/react",
     "prettier"
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],

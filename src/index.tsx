@@ -1,4 +1,4 @@
-/* istanbul ignore file */
+/* v8 ignore start */
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
