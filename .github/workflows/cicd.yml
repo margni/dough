@@ -12,6 +12,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: ${{ github.ref_name == 'master' && 'production' || 'preview' }}
+    env:
+      VITE_GA_ID: ${{ vars.VITE_GA_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
