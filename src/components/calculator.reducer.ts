@@ -27,13 +27,13 @@ const calculate = ({
     ingredients
       .filter(({ type }) => type === 'flour')
       .reduce((acc, { percent }) => acc + percent, 0),
-    3
+    3,
   );
   const adjunct = round(
     ingredients
       .filter(({ type }) => type === 'adjunct')
       .reduce((acc, { percent }) => acc + percent, 0),
-    3
+    3,
   );
   const total = flour + water + adjunct + starter;
 
@@ -63,7 +63,7 @@ const calculate = ({
 
 const calculateWeight = (
   weight: number,
-  { quantity, total }: { quantity: number; total: number }
+  { quantity, total }: { quantity: number; total: number },
 ) => round((weight * total) / quantity);
 
 const calculateBall = (state: State, weight: number) =>
@@ -74,7 +74,7 @@ const calculateBall = (state: State, weight: number) =>
 
 const calculatorReducer = (
   state: State,
-  { type, value = 0, ingredient }: Action
+  { type, value = 0, ingredient }: Action,
 ) => {
   switch (type) {
     case 'quantity':
@@ -99,7 +99,7 @@ const calculatorReducer = (
     case 'add':
     case 'remove':
     case 'update':
-      /* v8 ignore next 3 */
+      /* v8 ignore next -- @preserve */
       if (!ingredient) {
         throw new Error(`Ingredient action without 'ingredient'.`);
       }
@@ -130,15 +130,15 @@ const ingredientActions = {
     calculate({
       ...state,
       ingredients: state.ingredients.filter(
-        (ingredient) => ingredient !== removedIngredient
+        (ingredient) => ingredient !== removedIngredient,
       ),
     }),
   update: (state: State, newIngredient: Ingredient) => {
     const oldIngredient = state.ingredients.find(
-      ({ id }) => id === newIngredient.id
+      ({ id }) => id === newIngredient.id,
     );
 
-    /* v8 ignore next 3 */
+    /* v8 ignore next -- @preserve */
     if (!oldIngredient) {
       throw new Error('Update non existant ingredient!');
     }
@@ -151,7 +151,7 @@ const ingredientActions = {
       return {
         ...intermediateState,
         ingredients: intermediateState.ingredients.map((ingredient) =>
-          ingredient.id === newIngredient.id ? newIngredient : ingredient
+          ingredient.id === newIngredient.id ? newIngredient : ingredient,
         ),
       };
     }
@@ -159,7 +159,7 @@ const ingredientActions = {
     return calculate({
       ...state,
       ingredients: state.ingredients.map((ingredient) =>
-        newIngredient.id === ingredient.id ? newIngredient : ingredient
+        newIngredient.id === ingredient.id ? newIngredient : ingredient,
       ),
     });
   },
@@ -169,7 +169,7 @@ export const useCalculator = (defaultRecipe: Recipe) => {
   const [state, dispatch] = useReducer(
     calculatorReducer,
     defaultRecipe,
-    (state) => calculate(state)
+    (state) => calculate(state),
   );
 
   return {
@@ -177,15 +177,15 @@ export const useCalculator = (defaultRecipe: Recipe) => {
     dispatch,
     add: useCallback(
       (ingredient: Ingredient) => dispatch({ type: 'add', ingredient }),
-      []
+      [],
     ),
     update: useCallback(
       (ingredient: Ingredient) => dispatch({ type: 'update', ingredient }),
-      []
+      [],
     ),
     remove: useCallback(
       (ingredient: Ingredient) => dispatch({ type: 'remove', ingredient }),
-      []
+      [],
     ),
   };
 };
